@@ -1,8 +1,4 @@
 DAY 1 — Planning + wireframes
-Morning
-- Create project structure
-- Create persona
-- Define information architecture
 Afternoon
 Build:
 - landing.html
@@ -17,7 +13,7 @@ Complete:
 - persona.md
 - Start wcag-matrix.md
 End of Day 1 goal:
-All Part A foundations exist.
+
 
 DAY 2 — React architecture + UI
 Build:
