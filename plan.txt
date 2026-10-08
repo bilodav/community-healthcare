@@ -10,8 +10,6 @@ Complete:
 - Contrast calculations
 - Focus states
 - Semantic landmarks
-- persona.md
-- Start wcag-matrix.md
 End of Day 1 goal:
 
 

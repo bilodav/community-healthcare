@@ -25,7 +25,12 @@
     <!-- ============ HEADER LANDMARK ============ -->
     <header class="header">
       <a class="site-name" href="landing.html"
-        >Muni<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        >Muni<svg
+          aria-hidden="true"
+          focusable="false"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 448 512"
+        >
           <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
           <path
             d="M192 32l0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 64 0c53 0 96 43 96 96s-43 96-96 96l-16 0 0-64 16 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0 192 32 0c53 0 96 43 96 96 0 47.6-34.6 87.1-80 94.7l0-67c9.6-5.5 16-15.9 16-27.7 0-17.7-14.3-32-32-32l-32 0 0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-32-32 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-64-32 0c-53 0-96-43-96-96 0-47.6 34.6-87.1 80-94.7l0 67c-9.6 5.5-16 15.9-16 27.7 0 17.7 14.3 32 32 32l32 0 0-192-72.6 0c-11.1 19.1-31.7 32-55.4 32l-16 0C21.5 128 0 106.5 0 80S21.5 32 48 32l144 0z"
@@ -34,12 +39,12 @@
       >
       <nav class="nav" aria-label="Main">
         <ul>
-          <li><a href="landing.html" aria-current="page">Home</a></li>
-          <li><a href="listing.html">Find a service</a></li>
+          <li><a href="./landing.html" aria-current="page">Home</a></li>
+          <li><a href="./listing.html">Find a service</a></li>
           <li>
-            <a href="listing.html#availability">Practitioner availability</a>
+            <a href="./listing.html#availability">Practitioner availability</a>
           </li>
-          <li><a href="booking.html">Book an appointment</a></li>
+          <li><a href="./booking.html">Book an appointment</a></li>
         </ul>
       </nav>
     </header>
@@ -48,7 +53,7 @@
     <main id="main" tabindex="-1">
       <!-- 1. Hero + search -->
       <section class="hero bg-fade" aria-labelledby="hero-title">
-        <img src="../src/assets/images/heroImg.png" />
+        <img src="../src/assets/images/heroImg.png" alt="family hug" />
         <h1 id="hero-title">See a healthcare provider when you need one</h1>
 
         <p>
@@ -87,20 +92,28 @@
             </li>
           </ul>
 
-          <p class="field-hint" style="margin-top: 1rem">
-            If this is an emergency, call 10111 straight away.
-          </p>
+          <p>If this is an emergency, call 10111 straight away.</p>
         </div>
       </section>
 
       <!-- 3. Featured services -->
-      <section class="section section--mint" aria-labelledby="services-title">
+      <section class="section" aria-labelledby="services-title">
         <div class="container">
           <h2 id="services-title">Popular clinic services</h2>
 
-          <div class="grid">
+          <div class="services-card-container">
             <article class="card" aria-labelledby="svc-gp">
               <h3 id="svc-gp">General practice</h3>
+              <p>
+                Routine appointments, health reviews and referrals with a GP.
+              </p>
+              <a class="btn btn--outline" href="booking.html?service=general">
+                Book general practice
+              </a>
+            </article>
+
+            <article class="card" aria-labelledby="svc-gp">
+              <h3 id="svc-gp-placeholder">General practice</h3>
               <p>
                 Routine appointments, health reviews and referrals with a GP.
               </p>
@@ -136,135 +149,70 @@
             </article>
           </div>
 
-          <p style="margin-top: 1.5rem">
-            <a href="listing.html">View all clinic services</a>
-          </p>
+          <a class="extra-info" href="listing.html">View all clinic services</a>
         </div>
       </section>
 
       <!-- 4. How booking works: genuine sequence, so an ordered list -->
       <section class="section" aria-labelledby="how-title">
-        <div class="container">
+        <div class="container how-to">
           <h2 id="how-title">How booking works</h2>
+          <p>From feeling unwell to visiting our facility</p>
 
-          <ol class="steps">
-            <li>
-              <h3>Find a service</h3>
-              <p>Search or filter the clinic directory.</p>
-            </li>
-            <li>
-              <h3>Choose a time</h3>
-              <p>See which practitioners are free and pick a slot.</p>
-            </li>
-            <li>
-              <h3>Confirm your details</h3>
-              <p>
-                Review everything before you confirm. You can go back and change
-                it.
-              </p>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <!-- 5. Two-column: availability + help (aside) -->
-      <section class="section section--mint" aria-labelledby="avail-title">
-        <div class="container split">
-          <div id="availability">
-            <h2 id="avail-title">Next available appointments</h2>
-
-            <div class="table-wrap">
-              <table>
-                <caption>
-                  Earliest available appointment by practitioner (wireframe
-                  example data)
-                </caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Practitioner</th>
-                    <th scope="col">Service</th>
-                    <th scope="col">Next available</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Dr A. Mensah</th>
-                    <td>General practice</td>
-                    <td>
-                      <span class="status">Available: Tue 14 April, 10:30</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Nurse J. Patel</th>
-                    <td>Diabetes care</td>
-                    <td>
-                      <span class="status">Available: Wed 15 April, 09:00</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Dr L. Okafor</th>
-                    <td>Eye health</td>
-                    <td><span class="status">Fully booked this week</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="info-block">
+            <h3>01</h3>
+            <h4>Find a service</h4>
+            <p>Search or filter the clinic directory.</p>
           </div>
-
-          <!-- ASIDE LANDMARK: complementary support content -->
-          <aside class="notice" aria-labelledby="help-title">
-            <h2 id="help-title">Need help booking?</h2>
+          <div class="info-block">
+            <h3>02</h3>
+            <h4>Choose a time</h4>
+            <p>See which practitioners are free and pick a slot.</p>
+          </div>
+          <div class="info-block">
+            <h3>03</h3>
+            <h4>Confirm your details</h4>
             <p>
-              You can also book by phone or ask for support in the way that
-              suits you.
+              Review everything before you confirm. You can go back and change
+              it.
             </p>
-            <ul>
-              <li>Phone: <a href="tel:0800000000">0800 000 000</a></li>
-              <li>
-                Email:
-                <a href="mailto:bookings@example.org">bookings@example.org</a>
-              </li>
-              <li>
-                Text relay, BSL video and large-print appointment letters
-                available on request
-              </li>
-            </ul>
-            <p style="margin-top: 1rem">
-              <a href="#accessibility-statement"
-                >Read our accessibility statement</a
-              >
-            </p>
-          </aside>
+          </div>
         </div>
       </section>
     </main>
 
     <!-- ============ FOOTER LANDMARK ============ -->
-    <footer class="site-footer on-dark">
-      <div class="container">
-        <div class="split">
-          <section aria-labelledby="footer-contact">
-            <h2 id="footer-contact">Contact</h2>
-            <p>Community Clinic<br />12 Example Street, Placeholder Town</p>
-            <p>Open Monday to Friday, 08:00 to 18:00</p>
-          </section>
+    <footer class="on-dark">
+      <div class="container footer">
+        <a class="site-name" href="landing.html"
+          >Muni<svg
+            aria-hidden="true"
+            focusable="false"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 512"
+          >
+            <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+            <path
+              d="M192 32l0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 64 0c53 0 96 43 96 96s-43 96-96 96l-16 0 0-64 16 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0 192 32 0c53 0 96 43 96 96 0 47.6-34.6 87.1-80 94.7l0-67c9.6-5.5 16-15.9 16-27.7 0-17.7-14.3-32-32-32l-32 0 0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-32-32 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-64-32 0c-53 0-96-43-96-96 0-47.6 34.6-87.1 80-94.7l0 67c-9.6 5.5-16 15.9-16 27.7 0 17.7 14.3 32 32 32l32 0 0-192-72.6 0c-11.1 19.1-31.7 32-55.4 32l-16 0C21.5 128 0 106.5 0 80S21.5 32 48 32l144 0z"
+            /></svg
+          >Clinic</a
+        >
+        <section aria-labelledby="footer-contact">
+          <h2 id="footer-contact">Contact</h2>
+          <p>Community Clinic<br />12 Example Street, Placeholder Town</p>
+          <p>Open Monday to Friday, 08:00 to 18:00</p>
+        </section>
 
-          <nav aria-labelledby="footer-links">
-            <h2 id="footer-links">Quick links</h2>
-            <ul>
-              <li><a href="listing.html">Find a service</a></li>
-              <li><a href="booking.html">Book an appointment</a></li>
-              <li>
-                <a href="#accessibility-statement">Accessibility statement</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-
-        <small id="accessibility-statement">
-          This site aims to meet WCAG 2.1 Level AA. Prototype built for ticket
-          MD-2026-0143.
-        </small>
+        <nav aria-labelledby="footer-links">
+          <h2 id="footer-links">Quick links</h2>
+          <ul>
+            <li><a href="listing.html">Find a service</a></li>
+            <li><a href="booking.html">Book an appointment</a></li>
+            <li>
+              <a href="#accessibility-statement">Accessibility statement</a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </footer>
   </body>
