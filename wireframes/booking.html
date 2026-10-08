@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book an appointment – Community Clinic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <!-- 2.4.1 Bypass Blocks: first focusable element on the page -->
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <!-- ============ HEADER LANDMARK ============ -->
+    <header class="header">
+      <a class="site-name" href="landing.html"
+        >Muni<svg
+          aria-hidden="true"
+          focusable="false"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 448 512"
+        >
+          <path
+            d="M192 32l0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 64 0c53 0 96 43 96 96s-43 96-96 96l-16 0 0-64 16 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0 192 32 0c53 0 96 43 96 96 0 47.6-34.6 87.1-80 94.7l0-67c9.6-5.5 16-15.9 16-27.7 0-17.7-14.3-32-32-32l-32 0 0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-32-32 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-64-32 0c-53 0-96-43-96-96 0-47.6 34.6-87.1 80-94.7l0 67c-9.6 5.5-16 15.9-16 27.7 0 17.7 14.3 32 32 32l32 0 0-192-72.6 0c-11.1 19.1-31.7 32-55.4 32l-16 0C21.5 128 0 106.5 0 80S21.5 32 48 32l144 0z"
+          /></svg
+        >Clinic</a
+      >
+      <nav class="nav" aria-label="Main">
+        <ul>
+          <li><a href="./landing.html">Home</a></li>
+          <li><a href="./listing.html">Find a service</a></li>
+          <!-- Booking is the current page -->
+          <li>
+            <a href="./booking.html" aria-current="page">Book an appointment</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ============ MAIN LANDMARK ============ -->
+    <!-- id + tabindex="-1" make the skip link actually work -->
+    <main id="main" tabindex="-1" class="booking">
+      <div class="container">
+        <h1 id="booking-title">Book an appointment</h1>
+
+        <!-- Selected slot: plain text, with a machine-readable <time> -->
+        <p class="lead">
+          Your selected time:
+          <strong>
+            <time datetime="2026-10-09T10:15"
+              >Friday 9 October 2026 at 10:15</time
+            >
+          </strong>
+        </p>
+
+        <p>
+          Fields marked <span class="required">(required)</span> must be
+          completed.
+        </p>
+
+        <!--
+          Live region placeholder (4.1.3). Empty on load: the React version
+          writes messages here, e.g. "Appointment confirmed".
+          role="status" is aria-live="polite" with aria-atomic="true".
+        -->
+        <div id="form-status" role="status"></div>
+
+        <!--
+          aria-labelledby gives the form a name, which turns it into a
+          navigable "form" landmark for screen reader users.
+          action/method belong on <form>. action is a placeholder in the wireframe.
+        -->
+        <form
+          action="booking.html"
+          method="get"
+          aria-labelledby="booking-title"
+        >
+          <!-- ===== Group 1: personal details ===== -->
+          <fieldset>
+            <legend>Your details</legend>
+
+            <div class="field">
+              <label for="first-name"
+                >First name <span class="required">(required)</span></label
+              >
+              <input
+                type="text"
+                id="first-name"
+                name="firstName"
+                autocomplete="given-name"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="last-name"
+                >Last name <span class="required">(required)</span></label
+              >
+              <input
+                type="text"
+                id="last-name"
+                name="lastName"
+                autocomplete="family-name"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="contact-number"
+                >Cellphone number
+                <span class="required">(required)</span></label
+              >
+              <input
+                type="tel"
+                id="contact-number"
+                name="contactNumber"
+                autocomplete="tel"
+                inputmode="tel"
+                aria-describedby="contact-number-hint"
+                required
+              />
+              <span id="contact-number-hint" class="field-hint">
+                We will send your reminder here. For example: 082 123 4567.
+              </span>
+            </div>
+
+            <div class="field">
+              <label for="email"
+                >Email address <span class="required">(required)</span></label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                autocomplete="email"
+                aria-describedby="email-hint"
+                required
+              />
+              <span id="email-hint" class="field-hint">
+                We will send your booking confirmation here.
+              </span>
+            </div>
+          </fieldset>
+
+          <!-- ===== Group 2: appointment details ===== -->
+          <fieldset>
+            <legend>Appointment details</legend>
+
+            <div class="field">
+              <label for="appointment"
+                >Type of appointment
+                <span class="required">(required)</span></label
+              >
+              <select id="appointment" name="appointment" required>
+                <option value="">Select an appointment type</option>
+                <option value="consult">Consult without a procedure</option>
+                <option value="procedure">Consult with a procedure</option>
+              </select>
+            </div>
+
+            <!--
+              Radio buttons: a nested fieldset + legend is what announces
+              the question before each option ("Have you visited... group, No, radio button").
+              Every radio has its own unique id and <label>.
+            -->
+            <fieldset class="radio-group">
+              <legend>
+                Have you visited this practice before?
+                <span class="required">(required)</span>
+              </legend>
+
+              <div class="field-inline">
+                <input
+                  type="radio"
+                  id="visited-no"
+                  name="visited"
+                  value="no"
+                  checked
+                  required
+                />
+                <label for="visited-no">No, this is my first visit</label>
+              </div>
+
+              <div class="field-inline">
+                <input
+                  type="radio"
+                  id="visited-yes"
+                  name="visited"
+                  value="yes"
+                />
+                <label for="visited-yes">Yes, I have visited before</label>
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label for="support-needs"
+                >Do you need any support or adjustments? (optional)</label
+              >
+              <textarea
+                id="support-needs"
+                name="supportNeeds"
+                rows="4"
+                aria-describedby="support-needs-hint"
+              ></textarea>
+              <span id="support-needs-hint" class="field-hint">
+                For example: step-free access, a sign language interpreter or
+                large-print letters.
+              </span>
+            </div>
+          </fieldset>
+
+          <!-- Visible text name, no aria-label needed -->
+          <button class="btn-primary" type="submit">Review your booking</button>
+        </form>
+      </div>
+    </main>
+
+    <!-- ============ FOOTER LANDMARK ============ -->
+    <footer class="on-dark">
+      <div class="container footer">
+        <a class="site-name" href="landing.html"
+          >Muni<svg
+            aria-hidden="true"
+            focusable="false"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 512"
+          >
+            <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+            <path
+              d="M192 32l0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 64 0c53 0 96 43 96 96s-43 96-96 96l-16 0 0-64 16 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0 192 32 0c53 0 96 43 96 96 0 47.6-34.6 87.1-80 94.7l0-67c9.6-5.5 16-15.9 16-27.7 0-17.7-14.3-32-32-32l-32 0 0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-32-32 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-64-32 0c-53 0-96-43-96-96 0-47.6 34.6-87.1 80-94.7l0 67c-9.6 5.5-16 15.9-16 27.7 0 17.7 14.3 32 32 32l32 0 0-192-72.6 0c-11.1 19.1-31.7 32-55.4 32l-16 0C21.5 128 0 106.5 0 80S21.5 32 48 32l144 0z"
+            /></svg
+          >Clinic</a
+        >
+        <section aria-labelledby="footer-contact">
+          <h2 id="footer-contact">Contact</h2>
+          <p>Community Clinic<br />12 Example Street, Placeholder Town</p>
+          <p>Open Monday to Friday, 08:00 to 18:00</p>
+        </section>
+
+        <nav aria-labelledby="footer-links">
+          <h2 id="footer-links">Quick links</h2>
+          <ul>
+            <li><a href="listing.html">Find a service</a></li>
+            <li><a href="booking.html">Book an appointment</a></li>
+            <li>
+              <a href="#accessibility-statement">Accessibility statement</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

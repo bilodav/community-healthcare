@@ -1302,6 +1302,43 @@ How To Section
 
 /* 
 =====================================
+Booking Section
+=====================================
+*/
+
+.booking {
+  padding-top: 120px;
+  padding-bottom: 100px;
+} /* clears your fixed header */
+
+fieldset {
+  border: 0;
+  min-inline-size: 0;
+  margin-bottom: var(--spacing-lg);
+}
+
+legend {
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+  padding: 0;
+}
+
+.radio-group legend {
+  font-size: 1rem;
+  font-weight: var(--font-weight-semibold);
+}
+
+.field {
+  margin-bottom: var(--spacing-md);
+}
+.booking form {
+  max-width: 40rem;
+}
+
+/* 
+=====================================
 Footer Section
 =====================================
 */
@@ -1343,4 +1380,187 @@ footer {
 .header :focus-visible,
 .footer :focus-visible {
   outline-color: var(--focus-ring-on-dark);
+}
+
+/*
+=====================================
+Listing / Search Page
+Paste at the end of main.css
+=====================================
+*/
+
+/* Clears the fixed header */
+.listing {
+  padding-top: 120px;
+  padding-bottom: var(--spacing-2xl);
+}
+
+.listing .container {
+  width: min(100% - 2rem, var(--container-max));
+  margin-inline: auto;
+}
+
+/* ---------- Search form ---------- */
+.search-form {
+  margin-block: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background-color: var(--color-mint);
+  border-radius: var(--radius-xl);
+}
+
+.search-row {
+  display: grid;
+  gap: var(--spacing-md);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+/* ---------- Filter accordion (native <details>) ---------- */
+.filters-panel {
+  margin-block: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--bg-primary);
+  border: 2px solid var(--border-input); /* 4.2:1 on white */
+  border-radius: var(--radius-lg);
+}
+
+.filters-panel summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--target-min);
+  padding: 0.75rem var(--spacing-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.filter-groups {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  padding: var(--spacing-xs) var(--spacing-md) var(--spacing-md);
+}
+
+/* ---------- Fieldsets and legends ---------- */
+fieldset {
+  border: 0;
+  min-inline-size: 0;
+}
+
+legend {
+  padding: 0;
+  margin-bottom: var(--spacing-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.field {
+  margin-bottom: var(--spacing-md);
+}
+
+.search-row .field {
+  margin-bottom: 0;
+}
+
+/* ---------- Form buttons ---------- */
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+/* ---------- Results layout ---------- */
+.results-layout {
+  display: grid;
+  gap: var(--spacing-xl);
+  grid-template-columns: 1fr; /* stacked on mobile */
+  align-items: start;
+}
+
+.results-count {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.results-list {
+  display: grid;
+  gap: var(--spacing-md);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+/* ---------- Practitioner card ---------- */
+.practitioner-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  height: 100%;
+}
+
+.practitioner-card h3 {
+  margin-bottom: 0;
+  font-size: 1.375rem;
+}
+
+.practitioner-card .profession {
+  margin-bottom: var(--spacing-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-muted); /* 6.5:1 on white */
+}
+
+.practitioner-card dl {
+  display: grid;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+}
+
+.practitioner-card dt {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-muted);
+}
+
+.practitioner-card dd {
+  color: var(--text-primary); /* 16:1 on white */
+}
+
+/* Status is written text, never colour alone */
+.practitioner-card .status {
+  font-weight: var(--font-weight-semibold);
+}
+
+.practitioner-card .btn-outline {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* ---------- Help aside ---------- */
+.notice {
+  padding: var(--spacing-lg);
+  background-color: var(--color-peach);
+  border-radius: var(--radius-xl);
+}
+
+.notice h2 {
+  font-size: 1.5rem;
+}
+
+.notice h2,
+.notice p,
+.notice li {
+  color: var(--color-ink); /* 11.7:1 on peach */
+}
+
+.notice a {
+  color: var(--color-ink);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ---------- Desktop: results beside the help panel ---------- */
+@media (min-width: 60rem) {
+  .results-layout {
+    grid-template-columns: 2.5fr 1fr;
+  }
+
+  .notice {
+    position: sticky;
+    top: 120px;
+  }
 }

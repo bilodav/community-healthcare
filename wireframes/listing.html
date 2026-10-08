@@ -3,7 +3,520 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Find a practitioner – Community Clinic</title>
+    <meta
+      name="description"
+      content="Search clinic practitioners by name or profession. Filter by availability, in-person or virtual consultations, and languages spoken."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="main.css" />
   </head>
-  <body></body>
+
+  <body>
+    <!-- 2.4.1 Bypass Blocks: first focusable element on the page -->
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <!-- ============ HEADER LANDMARK ============ -->
+    <header class="header">
+      <a class="site-name" href="landing.html"
+        >Muni<svg
+          aria-hidden="true"
+          focusable="false"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 448 512"
+        >
+          <path
+            d="M192 32l0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 64 0c53 0 96 43 96 96s-43 96-96 96l-16 0 0-64 16 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0 192 32 0c53 0 96 43 96 96 0 47.6-34.6 87.1-80 94.7l0-67c9.6-5.5 16-15.9 16-27.7 0-17.7-14.3-32-32-32l-32 0 0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-32-32 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-64-32 0c-53 0-96-43-96-96 0-47.6 34.6-87.1 80-94.7l0 67c-9.6 5.5-16 15.9-16 27.7 0 17.7 14.3 32 32 32l32 0 0-192-72.6 0c-11.1 19.1-31.7 32-55.4 32l-16 0C21.5 128 0 106.5 0 80S21.5 32 48 32l144 0z"
+          /></svg
+        >Clinic</a
+      >
+      <nav class="nav" aria-label="Main">
+        <ul>
+          <li><a href="./landing.html">Home</a></li>
+          <li>
+            <a href="./listing.html" aria-current="page">Find a service</a>
+          </li>
+          <li><a href="./booking.html">Book an appointment</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ============ MAIN LANDMARK ============ -->
+    <main id="main" tabindex="-1" class="listing">
+      <div class="container">
+        <h1>Find a practitioner</h1>
+        <p class="lead">
+          Search by name or profession, then narrow the results by availability,
+          type of consultation and the languages spoken.
+        </p>
+
+        <!--
+          One GET form wraps search + filters, so it works with no JavaScript.
+          role="search" makes it a search landmark; aria-labelledby names it.
+        -->
+        <form
+          class="search-form"
+          action="listing.html"
+          method="get"
+          role="search"
+          aria-labelledby="search-title"
+        >
+          <h2 id="search-title" class="sr-only">
+            Search and filter practitioners
+          </h2>
+
+          <!-- ===== Search row ===== -->
+          <div class="search-row">
+            <div class="field">
+              <label for="search-term">Search by name or keyword</label>
+              <input
+                type="search"
+                id="search-term"
+                name="q"
+                autocomplete="off"
+                aria-describedby="search-term-hint"
+              />
+              <span id="search-term-hint" class="field-hint">
+                For example: "Mokoena" or "diabetes".
+              </span>
+            </div>
+
+            <div class="field">
+              <label for="profession">Profession</label>
+              <select id="profession" name="profession">
+                <option value="">All professions</option>
+                <option value="dietician">Dietician</option>
+                <option value="doctor">Doctor</option>
+                <option value="nurse">Nurse</option>
+                <option value="pharmacist">Pharmacist</option>
+                <option value="physiotherapist">Physiotherapist</option>
+                <option value="psychologist">Psychologist</option>
+              </select>
+            </div>
+          </div>
+
+          <!--
+            Native <details>/<summary> = an accordion with built-in keyboard
+            support and no JavaScript. The browser exposes its expanded state
+            to assistive tech automatically. In the React build this becomes a
+            <button aria-expanded aria-controls> driven by state.
+          -->
+          <details class="filters-panel" open>
+            <summary>Filter results</summary>
+
+            <div class="filter-groups">
+              <!-- Availability: one choice only, so radio buttons -->
+              <fieldset>
+                <legend>Availability</legend>
+                <div class="field-inline">
+                  <input
+                    type="radio"
+                    id="avail-any"
+                    name="availability"
+                    value="any"
+                    checked
+                  />
+                  <label for="avail-any">Any time</label>
+                </div>
+                <div class="field-inline">
+                  <input
+                    type="radio"
+                    id="avail-today"
+                    name="availability"
+                    value="today"
+                  />
+                  <label for="avail-today">Available today</label>
+                </div>
+                <div class="field-inline">
+                  <input
+                    type="radio"
+                    id="avail-week"
+                    name="availability"
+                    value="week"
+                  />
+                  <label for="avail-week">Available this week</label>
+                </div>
+                <div class="field-inline">
+                  <input
+                    type="radio"
+                    id="avail-fortnight"
+                    name="availability"
+                    value="fortnight"
+                  />
+                  <label for="avail-fortnight"
+                    >Available in the next 14 days</label
+                  >
+                </div>
+              </fieldset>
+
+              <!-- Consultation type: can pick one or both, so checkboxes -->
+              <fieldset aria-describedby="consult-hint">
+                <legend>Type of consultation</legend>
+                <span id="consult-hint" class="field-hint"
+                  >Select one or both.</span
+                >
+                <div class="field-inline">
+                  <input
+                    type="checkbox"
+                    id="consult-in-person"
+                    name="consult"
+                    value="in-person"
+                  />
+                  <label for="consult-in-person">In person</label>
+                </div>
+                <div class="field-inline">
+                  <input
+                    type="checkbox"
+                    id="consult-virtual"
+                    name="consult"
+                    value="virtual"
+                  />
+                  <label for="consult-virtual">Virtual (video or phone)</label>
+                </div>
+              </fieldset>
+
+              <!-- Languages: multiple choice, so checkboxes -->
+              <fieldset aria-describedby="language-hint">
+                <legend>Languages spoken</legend>
+                <span id="language-hint" class="field-hint">
+                  Select any that apply. Shows practitioners who speak at least
+                  one.
+                </span>
+                <div class="field-inline">
+                  <input
+                    type="checkbox"
+                    id="lang-en"
+                    name="language"
+                    value="english"
+                  />
+                  <label for="lang-en">English</label>
+                </div>
+                <div class="field-inline">
+                  <input
+                    type="checkbox"
+                    id="lang-af"
+                    name="language"
+                    value="afrikaans"
+                  />
+                  <label for="lang-af">Afrikaans</label>
+                </div>
+                <div class="field-inline">
+                  <input
+                    type="checkbox"
+                    id="lang-zu"
+                    name="language"
+                    value="isizulu"
+                  />
+                  <label for="lang-zu">isiZulu</label>
+                </div>
+                <div class="field-inline">
+                  <input
+                    type="checkbox"
+                    id="lang-xh"
+                    name="language"
+                    value="isixhosa"
+                  />
+                  <label for="lang-xh">isiXhosa</label>
+                </div>
+                <div class="field-inline">
+                  <input
+                    type="checkbox"
+                    id="lang-st"
+                    name="language"
+                    value="sesotho"
+                  />
+                  <label for="lang-st">Sesotho</label>
+                </div>
+                <div class="field-inline">
+                  <input
+                    type="checkbox"
+                    id="lang-tn"
+                    name="language"
+                    value="setswana"
+                  />
+                  <label for="lang-tn">Setswana</label>
+                </div>
+                <div class="field-inline">
+                  <input
+                    type="checkbox"
+                    id="lang-sasl"
+                    name="language"
+                    value="sasl"
+                  />
+                  <label for="lang-sasl">South African Sign Language</label>
+                </div>
+              </fieldset>
+            </div>
+          </details>
+
+          <div class="form-actions">
+            <button class="btn-primary" type="submit">
+              Search practitioners
+            </button>
+            <a class="btn-outline" href="listing.html">Clear all filters</a>
+          </div>
+        </form>
+
+        <!-- ===== Results + help aside ===== -->
+        <div class="results-layout">
+          <section id="availability" aria-labelledby="results-title">
+            <h2 id="results-title">Available practitioners</h2>
+
+            <!--
+              Live region (4.1.3). It exists on load and is updated when
+              results change, so screen readers hear the count without
+              focus moving. Static text in the wireframe.
+            -->
+            <p id="results-count" class="results-count" role="status">
+              6 practitioners found
+            </p>
+
+            <ul class="results-list">
+              <li>
+                <article
+                  class="card practitioner-card"
+                  aria-labelledby="p-mokoena"
+                >
+                  <h3 id="p-mokoena">Dr Thandi Mokoena</h3>
+                  <p class="profession">Doctor (General practitioner)</p>
+                  <dl>
+                    <div>
+                      <dt>Consultations</dt>
+                      <dd>In person and virtual</dd>
+                    </div>
+                    <div>
+                      <dt>Languages</dt>
+                      <dd>English, isiZulu, Sesotho</dd>
+                    </div>
+                    <div>
+                      <dt>Next available</dt>
+                      <dd class="status">Available today, 16:00</dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="btn-outline"
+                    href="booking.html?practitioner=mokoena"
+                  >
+                    Book with Dr Thandi Mokoena
+                  </a>
+                </article>
+              </li>
+
+              <li>
+                <article
+                  class="card practitioner-card"
+                  aria-labelledby="p-dlamini"
+                >
+                  <h3 id="p-dlamini">Naledi Dlamini</h3>
+                  <p class="profession">Dietician</p>
+                  <dl>
+                    <div>
+                      <dt>Consultations</dt>
+                      <dd>Virtual only</dd>
+                    </div>
+                    <div>
+                      <dt>Languages</dt>
+                      <dd>English, isiXhosa, Afrikaans</dd>
+                    </div>
+                    <div>
+                      <dt>Next available</dt>
+                      <dd class="status">
+                        Available this week: Friday 9 October, 10:15
+                      </dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="btn-outline"
+                    href="booking.html?practitioner=dlamini"
+                  >
+                    Book with Naledi Dlamini
+                  </a>
+                </article>
+              </li>
+
+              <li>
+                <article
+                  class="card practitioner-card"
+                  aria-labelledby="p-nkosi"
+                >
+                  <h3 id="p-nkosi">Sipho Nkosi</h3>
+                  <p class="profession">Nurse (Diabetes care)</p>
+                  <dl>
+                    <div>
+                      <dt>Consultations</dt>
+                      <dd>In person only</dd>
+                    </div>
+                    <div>
+                      <dt>Languages</dt>
+                      <dd>English, isiZulu, Setswana</dd>
+                    </div>
+                    <div>
+                      <dt>Next available</dt>
+                      <dd class="status">Available today, 15:30</dd>
+                    </div>
+                  </dl>
+                  <a class="btn-outline" href="booking.html?practitioner=nkosi">
+                    Book with Sipho Nkosi
+                  </a>
+                </article>
+              </li>
+
+              <li>
+                <article
+                  class="card practitioner-card"
+                  aria-labelledby="p-vandermerwe"
+                >
+                  <h3 id="p-vandermerwe">Pieter van der Merwe</h3>
+                  <p class="profession">Pharmacist</p>
+                  <dl>
+                    <div>
+                      <dt>Consultations</dt>
+                      <dd>In person and virtual</dd>
+                    </div>
+                    <div>
+                      <dt>Languages</dt>
+                      <dd>English, Afrikaans</dd>
+                    </div>
+                    <div>
+                      <dt>Next available</dt>
+                      <dd class="status">
+                        Available this week: Friday 9 October, 11:00
+                      </dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="btn-outline"
+                    href="booking.html?practitioner=vandermerwe"
+                  >
+                    Book with Pieter van der Merwe
+                  </a>
+                </article>
+              </li>
+
+              <li>
+                <article
+                  class="card practitioner-card"
+                  aria-labelledby="p-patel"
+                >
+                  <h3 id="p-patel">Dr Ayesha Patel</h3>
+                  <p class="profession">Psychologist</p>
+                  <dl>
+                    <div>
+                      <dt>Consultations</dt>
+                      <dd>In person and virtual</dd>
+                    </div>
+                    <div>
+                      <dt>Languages</dt>
+                      <dd>English, Afrikaans</dd>
+                    </div>
+                    <div>
+                      <dt>Next available</dt>
+                      <dd class="status">
+                        Available in 14 days: Monday 12 October, 11:00
+                      </dd>
+                    </div>
+                  </dl>
+                  <a class="btn-outline" href="booking.html?practitioner=patel">
+                    Book with Dr Ayesha Patel
+                  </a>
+                </article>
+              </li>
+
+              <li>
+                <article
+                  class="card practitioner-card"
+                  aria-labelledby="p-khumalo"
+                >
+                  <h3 id="p-khumalo">Lerato Khumalo</h3>
+                  <p class="profession">Physiotherapist</p>
+                  <dl>
+                    <div>
+                      <dt>Consultations</dt>
+                      <dd>In person only</dd>
+                    </div>
+                    <div>
+                      <dt>Languages</dt>
+                      <dd>English, Sesotho, South African Sign Language</dd>
+                    </div>
+                    <div>
+                      <dt>Next available</dt>
+                      <dd class="status">
+                        Fully booked this week. Next: Tuesday 20 October, 08:30
+                      </dd>
+                    </div>
+                  </dl>
+                  <a
+                    class="btn-outline"
+                    href="booking.html?practitioner=khumalo"
+                  >
+                    Book with Lerato Khumalo
+                  </a>
+                </article>
+              </li>
+            </ul>
+          </section>
+
+          <!-- ASIDE LANDMARK: supporting content, not part of the results -->
+          <aside class="notice" aria-labelledby="help-title">
+            <h2 id="help-title">Need help choosing?</h2>
+            <p>
+              Not sure which practitioner you need? Our reception team can point
+              you to the right person and book for you.
+            </p>
+            <ul>
+              <li>Phone: <a href="tel:0800000000">0800 000 000</a></li>
+              <li>
+                Email:
+                <a href="mailto:bookings@example.org">bookings@example.org</a>
+              </li>
+            </ul>
+            <p>
+              Virtual consultations use video or phone. Tell us if you need a
+              sign language interpreter or other support.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <!-- ============ FOOTER LANDMARK ============ -->
+    <footer class="on-dark">
+      <div class="container footer">
+        <a class="site-name" href="landing.html"
+          >Muni<svg
+            aria-hidden="true"
+            focusable="false"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 512"
+          >
+            <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+            <path
+              d="M192 32l0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 64 0c53 0 96 43 96 96s-43 96-96 96l-16 0 0-64 16 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0 192 32 0c53 0 96 43 96 96 0 47.6-34.6 87.1-80 94.7l0-67c9.6-5.5 16-15.9 16-27.7 0-17.7-14.3-32-32-32l-32 0 0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-32-32 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-64-32 0c-53 0-96-43-96-96 0-47.6 34.6-87.1 80-94.7l0 67c-9.6 5.5-16 15.9-16 27.7 0 17.7 14.3 32 32 32l32 0 0-192-72.6 0c-11.1 19.1-31.7 32-55.4 32l-16 0C21.5 128 0 106.5 0 80S21.5 32 48 32l144 0z"
+            /></svg
+          >Clinic</a
+        >
+        <section aria-labelledby="footer-contact">
+          <h2 id="footer-contact">Contact</h2>
+          <p>Community Clinic<br />12 Example Street, Placeholder Town</p>
+          <p>Open Monday to Friday, 08:00 to 18:00</p>
+        </section>
+
+        <nav aria-labelledby="footer-links">
+          <h2 id="footer-links">Quick links</h2>
+          <ul>
+            <li><a href="listing.html">Find a service</a></li>
+            <li><a href="booking.html">Book an appointment</a></li>
+            <li>
+              <a href="#accessibility-statement">Accessibility statement</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </footer>
+  </body>
 </html>
