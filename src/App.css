@@ -1,184 +1,1094 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
+/* ============================================================
+   MEDICAL SITE STYLESHEET — calm, warm, accessible
+   ------------------------------------------------------------
+   Add to your HTML <head> (faster than @import, helps Lighthouse):
 
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap">
+
+   Also required for 100% Lighthouse accessibility:
+   - <html lang="en">, a <title>, and <meta name="viewport" content="width=device-width, initial-scale=1">
+   - One <h1> per page, headings in order (no skipping levels)
+   - Alt text on every <img> (alt="" if decorative)
+   - A skip link as the first element in <body>:
+     <a class="skip-link" href="#main">Skip to main content</a>
+   - Every input has a <label>
+   ============================================================ */
+
+/* ============================================================
+   MODERN RESET
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
-}
-
-#center {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
-}
-
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+em,
+strong,
+small,
+img,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+figure,
+figcaption,
+footer,
+header,
+nav,
+section,
+main {
+  margin: 0;
   padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
+}
 
-  .logo {
-    height: 18px;
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* Keeps anchored headings clear of sticky headers */
+  scroll-padding-top: 5rem;
+}
+
+body {
+  min-width: 300px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img,
+picture,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ============================================================
+   ROOT — DESIGN TOKENS
+   Contrast ratios noted are measured against the stated surface.
+   ============================================================ */
+
+:root {
+  /* Typography */
+  --font-display:
+    "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  --font-heading:
+    "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  --font-body:
+    "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.8;
+
+  /* Fluid type scale */
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-h3: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  --text-h2: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+  --text-h1: clamp(2.25rem, 1.7rem + 2.6vw, 3.75rem);
+
+  /* ── Brand palette ── */
+  --color-white: #ffffff;
+  --color-mint: #e9f4f2; /* soft clinical mint */
+  --color-peach: #f5d4c6; /* warm blush */
+  --color-ink: #112231; /* deep navy ink */
+  --color-ink-light: #1f3347;
+  --color-ink-dark: #0a151f;
+
+  --color-accent: #35647c; /* button accent — white text 6.4:1 */
+  --color-accent-light: #479ba6; /* decorative / large text / on-dark only */
+  --color-accent-dark: #264a5d;
+
+  /* Small-size teal text that passes AA on white (5.4:1) and mint (4.8:1) */
+  --color-accent-text: #2a7480;
+
+  /* ── Text ── */
+  --text-primary: #112231; /* on white 16:1 */
+  --text-secondary: #3b4a57; /* on white 9:1, mint 8:1 */
+  --text-muted: #526069; /* on white 6.5:1, mint 5.8:1, peach 4.7:1 */
+  --text-light: #526069;
+  --text-white: #ffffff;
+  --text-accent: #2a7480; /* small accent text */
+  --text-accent-large: #479ba6; /* 18px+ bold or 24px+ only (3.2:1 on white) */
+  --text-on-dark-accent: #7cc4cc; /* on ink 8:1 */
+
+  /* ── Neutrals (cool, tinted toward the palette) ── */
+  --color-gray-100: #f3f7f7;
+  --color-gray-200: #dbe7e6;
+  --color-gray-300: #c3d3d3;
+  --color-gray-400: #8fa3a8;
+  --color-gray-500: #6b7f8c; /* 4.2:1 on white — safe for input borders (3:1 needed) */
+  --color-gray-600: #526069;
+  --color-gray-700: #3b4a57;
+
+  /* ── Status (all AA on white) ── */
+  --color-error: #b3261e; /* 6.5:1 */
+  --color-error-light: #fbe9e7;
+  --color-error-dark: #8c1d18;
+
+  --color-success: #1d6b4a; /* 6.4:1 */
+  --color-success-light: #e3f3ec;
+  --color-success-dark: #145037;
+
+  --color-warning: #8a5300; /* 5.6:1 */
+  --color-warning-light: #fdf1dc;
+
+  --text-error: #b3261e;
+  --text-success: #1d6b4a;
+
+  /* ── Backgrounds ── */
+  --bg-primary: #ffffff; /* main page background */
+  --bg-secondary: #e9f4f2;
+  --bg-warm: #f5d4c6;
+  --bg-dark: #112231;
+  --bg-accent: #35647c;
+  --bg-hover: #e9f4f2;
+
+  /* ── Borders ── */
+  --border-light: #dbe7e6; /* decorative only */
+  --border-medium: #c3d3d3; /* decorative only */
+  --border-input: #6b7f8c; /* UI component boundary: 4.2:1 */
+  --border-accent: #35647c;
+  --border-primary: #112231;
+
+  /* ── Shadows (tinted with ink, never pure black) ── */
+  --shadow-sm: 0 1px 2px rgba(17, 34, 49, 0.08);
+  --shadow-md: 0 4px 10px rgba(17, 34, 49, 0.1);
+  --shadow-lg: 0 12px 28px rgba(17, 34, 49, 0.14);
+  --shadow-xl: 0 24px 48px rgba(17, 34, 49, 0.18);
+  --shadow-accent: 0 6px 16px rgba(53, 100, 124, 0.28);
+  --shadow-inset: inset 0 2px 4px rgba(17, 34, 49, 0.06);
+
+  /* ── Focus (WCAG 2.4.7 / 2.4.11 / 1.4.11) ── */
+  --focus-ring-color: #35647c; /* 6.4:1 on white, 5.7:1 on mint */
+  --focus-ring-on-dark: #f5d4c6; /* 11:1 on ink */
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 3px;
+
+  /* ── Buttons ── */
+  --btn-primary-bg: #112231;
+  --btn-primary-text: #ffffff; /* 16:1 */
+  --btn-primary-hover: #1f3347;
+  --btn-primary-active: #0a151f;
+  --btn-primary-shadow: 0 4px 12px rgba(17, 34, 49, 0.25);
+
+  --btn-accent-bg: #35647c;
+  --btn-accent-text: #ffffff; /* 6.4:1 */
+  --btn-accent-hover: #2b5368; /* 8.3:1 */
+  --btn-accent-active: #264a5d;
+  --btn-accent-shadow: 0 4px 12px rgba(53, 100, 124, 0.32);
+
+  --btn-secondary-bg: transparent;
+  --btn-secondary-text: #112231;
+  --btn-secondary-border: #112231;
+  --btn-secondary-hover-bg: #112231;
+  --btn-secondary-hover-text: #ffffff;
+
+  --btn-outline-bg: transparent;
+  --btn-outline-text: #35647c;
+  --btn-outline-border: #35647c;
+  --btn-outline-hover-bg: #35647c;
+  --btn-outline-hover-text: #ffffff;
+
+  --btn-danger-bg: #b3261e;
+  --btn-danger-text: #ffffff;
+  --btn-danger-hover: #8c1d18;
+  --btn-danger-active: #6e1612;
+  --btn-danger-shadow: 0 4px 12px rgba(179, 38, 30, 0.3);
+
+  --btn-success-bg: #1d6b4a;
+  --btn-success-text: #ffffff;
+  --btn-success-hover: #145037;
+  --btn-success-active: #0f3d29;
+  --btn-success-shadow: 0 4px 12px rgba(29, 107, 74, 0.3);
+
+  --btn-ghost-text: #112231;
+  --btn-ghost-hover-bg: rgba(17, 34, 49, 0.07);
+  --btn-ghost-active-bg: rgba(17, 34, 49, 0.14);
+
+  --btn-ghost-accent-text: #2a7480;
+  --btn-ghost-accent-hover-bg: rgba(53, 100, 124, 0.1);
+  --btn-ghost-accent-active-bg: rgba(53, 100, 124, 0.18);
+
+  --btn-link-text: #35647c;
+  --btn-link-hover-text: #112231;
+
+  /* ── Highlights ── */
+  --highlight-primary: #479ba6;
+  --highlight-secondary: #f5d4c6;
+  --accent-underline: #479ba6;
+  --selection-bg: #112231;
+  --selection-text: #ffffff;
+
+  /* ── Spacing ── */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+  --spacing-3xl: 6rem;
+
+  /* ── Radius: soft, friendly, reassuring ── */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* ── Layout ── */
+  --container-max: 72rem;
+  --measure: 68ch; /* comfortable reading line length */
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease-out;
+  --transition-base: 250ms ease-out;
+  --transition-slow: 350ms ease-out;
+  --transition-veryslow: 550ms ease-out;
+
+  /* ── Touch targets (WCAG 2.5.8; Lighthouse recommends 48px) ── */
+  --target-min: 48px;
+}
+
+/* ============================================================
+   BASE TYPOGRAPHY
+   ============================================================ */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--text-secondary);
+  background-color: var(--bg-primary);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--spacing-md);
+  text-wrap: balance;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-h1);
+  letter-spacing: -0.02em;
+}
+h2 {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-h2);
+}
+h3 {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-h3);
+}
+h4 {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-lg);
+  letter-spacing: 0;
+}
+
+p {
+  font-family: var(--font-body);
+  line-height: var(--line-height-relaxed);
+  max-width: var(--measure);
+  margin-bottom: var(--spacing-sm);
+  text-wrap: pretty;
+}
+
+.lead {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+}
+
+small,
+.text-small {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+strong {
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+/* Links: underlined so they never rely on colour alone (WCAG 1.4.1) */
+a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition:
+    color var(--transition-fast),
+    text-decoration-thickness var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-ink);
+  text-decoration-thickness: 2px;
+}
+
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+/* ============================================================
+   ACCESSIBILITY FOUNDATIONS
+   ============================================================ */
+
+/* One consistent, high-contrast focus indicator for everything */
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: var(--radius-sm);
+}
+
+/* Mouse users don't get a ring on click; keyboard users always do */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Skip link: first focusable element on the page */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: var(--spacing-sm);
+  z-index: 1000;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: var(--color-ink);
+  color: var(--text-white);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  transform: translateY(-120%);
+  transition: transform var(--transition-fast);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  color: var(--text-white);
+  outline-color: var(--focus-ring-on-dark);
+}
+
+/* Visually hidden but available to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus ring on dark surfaces needs a light colour */
+.surface-dark :focus-visible,
+.section--dark :focus-visible,
+[data-theme="dark"] :focus-visible {
+  outline-color: var(--focus-ring-on-dark);
+}
+
+/* Respect reduced-motion preferences (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
+  .btn-primary:hover,
+  .btn-accent:hover,
+  .btn-danger:hover,
+  .btn-success:hover {
+    transform: none !important;
   }
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
+/* Windows High Contrast / forced colours */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 3px solid Highlight;
+  }
+
+  .btn-primary,
+  .btn-accent,
+  .btn-secondary,
+  .btn-outline,
+  .btn-danger,
+  .btn-success {
+    border: 2px solid ButtonText;
   }
 }
 
-.ticks {
-  position: relative;
+/* ============================================================
+   LAYOUT HELPERS
+   ============================================================ */
+
+.container {
+  width: min(100% - 2rem, var(--container-max));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--spacing-3xl);
+  background-color: var(--bg-primary);
+}
+
+.section--mint {
+  background-color: var(--bg-secondary);
+}
+
+.section--peach {
+  background-color: var(--bg-warm);
+}
+
+.section--dark {
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+}
+
+.section--dark h1,
+.section--dark h2,
+.section--dark h3,
+.section--dark h4,
+.section--dark strong {
+  color: var(--text-white);
+}
+
+.section--dark p {
+  color: #dbe7e6; /* 12:1 on ink */
+}
+
+.section--dark a {
+  color: var(--color-peach);
+}
+
+.section--dark a:hover {
+  color: var(--text-white);
+}
+
+/* Soft mint fade into white: a signature hero background */
+.bg-fade {
+  background: linear-gradient(
+    190deg,
+    var(--color-mint) 0%,
+    #c4dde0 40%,
+    #e9e9e5 68%,
+    var(--color-peach) 100%
+  );
+}
+
+/* ============================================================
+   COMPONENTS
+   ============================================================ */
+
+/* ── Eyebrow / badge ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.875rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-ink);
+  background-color: var(--color-peach); /* 11.7:1 */
+  border-radius: var(--radius-full);
+}
+
+.badge--mint {
+  background-color: var(--color-mint);
+  color: var(--color-accent-dark);
+}
+
+/* ── Card ── */
+.card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.card--mint {
+  background-color: var(--bg-secondary);
+  border-color: transparent;
+}
+
+.card--peach {
+  background-color: var(--bg-warm);
+  border-color: transparent;
+}
+
+/* Interactive cards get a visible focus state when wrapped in a link */
+a.card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
+}
+
+a.card:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── Alerts (icon + text so meaning never relies on colour alone) ── */
+.alert {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  border-left: 6px solid currentColor;
+  font-weight: var(--font-weight-medium);
+}
+
+.alert--error {
+  background-color: var(--color-error-light);
+  color: var(--color-error-dark);
+}
+
+.alert--success {
+  background-color: var(--color-success-light);
+  color: var(--color-success-dark);
+}
+
+.alert--warning {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning);
+}
+
+.alert--info {
+  background-color: var(--color-mint);
+  color: var(--color-accent-dark);
+}
+
+/* ── Small decorative accent line under headings ── */
+.accent-rule {
+  width: 3.5rem;
+  height: 4px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--color-accent-light);
+  margin-bottom: var(--spacing-md);
+}
+
+/* ============================================================
+   FORM ELEMENTS
+   ============================================================ */
+
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+  font-size: 1rem; /* 16px minimum prevents iOS zoom */
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  border: 2px solid var(--border-input); /* 4.2:1 — meets 1.4.11 */
+  border-radius: var(--radius-md);
+  padding: 0.625rem var(--spacing-sm);
+  min-height: var(--target-min);
   width: 100%;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
-
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
 }
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: var(--color-ink);
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  border-color: var(--color-accent);
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: 2px;
+  box-shadow: var(--shadow-accent);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted); /* 6.5:1 — passes even as placeholder */
+  opacity: 1;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background-color: var(--color-gray-100);
+  color: var(--text-muted);
+  border-color: var(--border-medium);
+  cursor: not-allowed;
+}
+
+/* Error / success states: pair with aria-invalid and a text message */
+input.input-error,
+select.input-error,
+textarea.input-error,
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: var(--color-error);
+  background-color: var(--color-error-light);
+}
+
+input.input-success,
+select.input-success,
+textarea.input-success {
+  border-color: var(--color-success);
+}
+
+/* ── Select ── */
+select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23112231' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-sm) center;
+  background-size: 12px 8px;
+  padding-right: calc(var(--spacing-lg) + var(--spacing-xs));
+}
+
+select:disabled {
+  background-image: none;
+}
+
+/* ── Textarea ── */
+textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: var(--line-height-normal);
+}
+
+/* ── Checkbox / radio ── */
+input[type="checkbox"],
+input[type="radio"] {
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+  padding: 0;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+/* ── Label ── */
+label {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-semibold);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Label sitting beside a checkbox/radio */
+.field-inline {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  min-height: var(--target-min);
+}
+
+.field-inline label {
+  margin-bottom: 0;
+  font-weight: var(--font-weight-normal);
+  cursor: pointer;
+}
+
+/* ── Helper / error text ── */
+.field-hint {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.field-error-text {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-error);
+  margin-top: 0.25rem;
+}
+
+/* ── Required marker ── */
+.required {
+  color: var(--color-error);
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.btn-primary,
+.btn-accent,
+.btn-secondary,
+.btn-outline,
+.btn-ghost,
+.btn-ghost-accent,
+.btn-danger,
+.btn-success {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--target-min);
+  padding: 0.75rem var(--spacing-lg);
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
+}
+
+/* ── Primary: deep ink ── */
+.btn-primary {
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border: 2px solid var(--btn-primary-bg);
+  box-shadow: var(--btn-primary-shadow);
+}
+
+.btn-primary:hover {
+  background-color: var(--btn-primary-hover);
+  border-color: var(--btn-primary-hover);
+  color: var(--btn-primary-text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active {
+  background-color: var(--btn-primary-active);
+  transform: translateY(0);
+}
+
+/* ── Accent: calming teal-blue ── */
+.btn-accent {
+  background-color: var(--btn-accent-bg);
+  color: var(--btn-accent-text);
+  border: 2px solid var(--btn-accent-bg);
+  box-shadow: var(--btn-accent-shadow);
+}
+
+.btn-accent:hover {
+  background-color: var(--btn-accent-hover);
+  border-color: var(--btn-accent-hover);
+  color: var(--btn-accent-text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-accent:active {
+  background-color: var(--btn-accent-active);
+  transform: translateY(0);
+}
+
+/* ── Secondary: ink outline ── */
+.btn-secondary {
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  border: 2px solid var(--btn-secondary-border);
+}
+
+.btn-secondary:hover {
+  background-color: var(--btn-secondary-hover-bg);
+  color: var(--btn-secondary-hover-text);
+}
+
+/* ── Outline: teal outline ── */
+.btn-outline {
+  background-color: var(--btn-outline-bg);
+  color: var(--btn-outline-text);
+  border: 2px solid var(--btn-outline-border);
+}
+
+.btn-outline:hover {
+  background-color: var(--btn-outline-hover-bg);
+  color: var(--btn-outline-hover-text);
+}
+
+/* ── Ghost ── */
+.btn-ghost {
+  background-color: transparent;
+  color: var(--btn-ghost-text);
+  border: 2px solid transparent;
+}
+
+.btn-ghost:hover {
+  background-color: var(--btn-ghost-hover-bg);
+}
+
+.btn-ghost:active {
+  background-color: var(--btn-ghost-active-bg);
+}
+
+/* ── Ghost accent ── */
+.btn-ghost-accent {
+  background-color: transparent;
+  color: var(--btn-ghost-accent-text);
+  border: 2px solid transparent;
+}
+
+.btn-ghost-accent:hover {
+  background-color: var(--btn-ghost-accent-hover-bg);
+}
+
+.btn-ghost-accent:active {
+  background-color: var(--btn-ghost-accent-active-bg);
+}
+
+/* ── Link button ── */
+.btn-link {
+  display: inline;
+  background: none;
+  border: none;
+  padding: 0;
+  min-height: 0;
+  color: var(--btn-link-text);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  transition: color var(--transition-fast);
+}
+
+.btn-link:hover {
+  color: var(--btn-link-hover-text);
+}
+
+/* ── Danger ── */
+.btn-danger {
+  background-color: var(--btn-danger-bg);
+  color: var(--btn-danger-text);
+  border: 2px solid var(--btn-danger-bg);
+  box-shadow: var(--btn-danger-shadow);
+}
+
+.btn-danger:hover {
+  background-color: var(--btn-danger-hover);
+  border-color: var(--btn-danger-hover);
+  color: var(--btn-danger-text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-danger:active {
+  background-color: var(--btn-danger-active);
+  transform: translateY(0);
+}
+
+/* ── Success ── */
+.btn-success {
+  background-color: var(--btn-success-bg);
+  color: var(--btn-success-text);
+  border: 2px solid var(--btn-success-bg);
+  box-shadow: var(--btn-success-shadow);
+}
+
+.btn-success:hover {
+  background-color: var(--btn-success-hover);
+  border-color: var(--btn-success-hover);
+  color: var(--btn-success-text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-success:active {
+  background-color: var(--btn-success-active);
+  transform: translateY(0);
+}
+
+/* ── Icon button: always add aria-label in your HTML ── */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--target-min);
+  height: var(--target-min);
+  background-color: transparent;
+  color: var(--btn-ghost-text);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+}
+
+.btn-icon:hover {
+  background-color: var(--btn-ghost-hover-bg);
+}
+
+/* ── Buttons on dark surfaces ── */
+.section--dark .btn-primary {
+  background-color: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-ink); /* 16:1 */
+}
+
+.section--dark .btn-primary:hover {
+  background-color: var(--color-peach);
+  border-color: var(--color-peach);
+  color: var(--color-ink);
+}
+
+.section--dark .btn-secondary,
+.section--dark .btn-outline {
+  color: var(--color-white);
+  border-color: var(--color-white);
+}
+
+.section--dark .btn-secondary:hover,
+.section--dark .btn-outline:hover {
+  background-color: var(--color-white);
+  color: var(--color-ink);
+}
+
+/* ── Disabled state (shared) ──
+   Disabled controls are exempt from contrast rules, but stay legible */
+.btn-primary:disabled,
+.btn-accent:disabled,
+.btn-secondary:disabled,
+.btn-outline:disabled,
+.btn-ghost:disabled,
+.btn-ghost-accent:disabled,
+.btn-danger:disabled,
+.btn-success:disabled,
+[aria-disabled="true"].btn-primary,
+[aria-disabled="true"].btn-accent {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ============================================================
+   SCREEN SIZES EXAMPLES
+   ============================================================ */
+
+/* Small devices (tiny screens and up, 176px and up) */
+/* @media (min-width: 176px) { */
+/* body {background-color: green;} */
+
+/* } */
+
+/* Medium devices (tablets, 768px and up) */
+/* @media (min-width: 768px) { */
+/* body {background-color: rgb(71, 17, 195);} */
+
+/* } */
+
+/* Large devices (desktops, 992px and up) */
+/* @media (min-width: 992px) { */
+/* body {background-color: rgb(242, 118, 192);} */
+
+/* } */
+
+/* Extra large devices (large desktops, 1200px and up) */
+/* @media (min-width: 1200px) {
+ body {background-color: rgb(101, 217, 233);}
+  
+} */
+
+/* Extra extra large devices (larger desktops, 1400px and up) */
+/* @media (min-width: 1400px) {
+ body {background-color: rgb(144, 111, 221);}
+  
+} */

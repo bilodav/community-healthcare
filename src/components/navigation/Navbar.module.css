@@ -1,0 +1,62 @@
+/* Small devices (tiny screens and up, 176px and up) */
+@media (min-width: 176px) {
+  .nav {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    background: #2b2b2b; /* solid: backdrop-filter doesn't stack well inside the header's */
+    border-radius: 24px;
+    z-index: 10000;
+    padding: 12px 0;
+  }
+
+  .nav.open {
+    display: block;
+    z-index: 10000;
+  }
+
+  .nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav a {
+    display: block;
+    padding: 14px 30px;
+    color: var(--text-white);
+    text-decoration: none;
+  }
+
+  .nav a[aria-current="page"] {
+    color: var(--text-accent);
+  }
+
+  .nav.open a[aria-current="page"] {
+    color: var(--text-on-dark-accent);
+  }
+}
+
+@media (min-width: 768px) {
+  .nav,
+  .nav.open {
+    display: block;
+    position: static;
+    background: none;
+    border-radius: 0;
+    padding: 0;
+    margin-left: auto;
+  }
+
+  .nav ul {
+    display: flex;
+    gap: 24px;
+  }
+
+  .nav a {
+    padding: 8px 12px;
+    color: var(--text-primary);
+  }
+}
