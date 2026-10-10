@@ -9,6 +9,8 @@ export const visitedOptions = [
 ];
 
 export const emptyBooking = {
+  date: "",
+  slot: "",
   firstName: "",
   lastName: "",
   contactNumber: "",

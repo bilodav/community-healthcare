@@ -1,3 +1,7 @@
 .field {
   margin-bottom: var(--spacing-md);
 }
+
+.field :is(input, select, textarea) {
+  scroll-margin-top: 160px;
+}

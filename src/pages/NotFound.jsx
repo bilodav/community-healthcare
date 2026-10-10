@@ -5,7 +5,7 @@ import styles from "./NotFound.module.css";
 function NotFound() {
   const navigate = useNavigate();
   return (
-    <section className={styles["page-not-found"]}>
+    <main id="main" tabIndex={-1} className={styles["page-not-found"]}>
       <div className={styles["text-404"]}>
         <p>404</p>
         <p>
@@ -22,10 +22,10 @@ function NotFound() {
         <Button
           text="Find a Provider"
           className={"btn-accent"}
-          onClick={() => navigate("/listings")}
+          onClick={() => navigate("/listing")}
         />
       </div>
-    </section>
+    </main>
   );
 }
 

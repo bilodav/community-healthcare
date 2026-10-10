@@ -1,0 +1,14 @@
+.status {
+  margin-block: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-success-light);
+  color: var(--color-success-dark);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Takes no space while empty, but stays in the DOM so it works as a live region */
+.status:empty {
+  margin: 0;
+  padding: 0;
+}

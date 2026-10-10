@@ -1,19 +1,29 @@
 import { useId } from "react";
 import styles from "./FormField.module.css";
 
-// Label + control + optional hint, wired together with matching ids.
+// Label + control + optional hint + optional error, wired together with matching ids.
 // `as` can be "input" (default), "select" or "textarea".
+// Pass `id` when something else (like the error summary) needs to link to the field.
 function FormField({
   label,
   name,
+  id: idProp,
   as: Control = "input",
   required = false,
   hint,
+  error,
   children,
   ...rest
 }) {
-  const id = useId();
+  const generatedId = useId();
+  const id = idProp ?? generatedId;
   const hintId = `${id}-hint`;
+  const errorId = `${id}-error`;
+
+  // Screen readers read every id listed here, in order: hint first, then error
+  const describedBy = [hint && hintId, error && errorId]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div className={`field ${styles["field"]}`}>
@@ -31,7 +41,8 @@ function FormField({
         id={id}
         name={name}
         required={required}
-        aria-describedby={hint ? hintId : undefined}
+        aria-invalid={error ? "true" : undefined}
+        aria-describedby={describedBy || undefined}
         {...rest}
       >
         {children}
@@ -40,6 +51,13 @@ function FormField({
       {hint && (
         <span id={hintId} className="field-hint">
           {hint}
+        </span>
+      )}
+
+      {error && (
+        <span id={errorId} className="field-error-text">
+          <span aria-hidden="true">⚠ </span>
+          Error: {error}
         </span>
       )}
     </div>

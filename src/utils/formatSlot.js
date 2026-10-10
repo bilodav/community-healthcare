@@ -1,4 +1,4 @@
-function formatSlot(datetime) {
+export function formatSlot(datetime) {
   const date = new Date(datetime);
   if (Number.isNaN(date.getTime())) return datetime;
 
@@ -16,16 +16,13 @@ function formatSlot(datetime) {
   return `${day} at ${time}`;
 }
 
-function SelectedSlot({ datetime, practitionerName }) {
-  return (
-    <p className="lead">
-      Your selected time:{" "}
-      <strong>
-        <time dateTime={datetime}>{formatSlot(datetime)}</time>
-      </strong>
-      {practitionerName && <> with {practitionerName}</>}
-    </p>
-  );
-}
+export function formatDay(dateKey) {
+  const date = new Date(`${dateKey}T00:00`);
+  if (Number.isNaN(date.getTime())) return dateKey;
 
-export default SelectedSlot;
+  return date.toLocaleDateString("en-ZA", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
+}

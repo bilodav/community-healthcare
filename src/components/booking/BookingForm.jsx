@@ -1,75 +1,163 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./BookingForm.module.css";
 import FormSection from "../forms/FormSection";
 import FormField from "../forms/FormField";
 import RadioGroup from "../forms/RadioGroup";
+import ErrorSummary from "../forms/ErrorSummary";
+import SlotPicker from "./SlotPicker";
 import {
   appointmentTypes,
   visitedOptions,
   emptyBooking,
 } from "../../data/bookingOptions";
+import {
+  validateField,
+  validateAll,
+  validatedFields,
+} from "../../utils/validateBooking";
 
-function BookingForm({ labelledBy, onSubmit }) {
+// Stable ids so the error summary links can point at each field
+const fieldId = (name) => `booking-${name}`;
+
+function BookingForm({
+  labelledBy,
+  onSubmit,
+  onInvalid,
+  submitting = false,
+  slots,
+  slotsStatus,
+  onRetrySlots,
+}) {
   const [values, setValues] = useState(emptyBooking);
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+  const [submitAttempts, setSubmitAttempts] = useState(0);
+  const summaryRef = useRef(null);
 
-  // One handler for every field, keyed by the input's name
+  // A chosen time only counts while it is still in the list of open slots
+  // (for example it disappears if the slots are reloaded after a conflict)
+  const current = {
+    ...values,
+    slot: slots.some((s) => s.start === values.slot) ? values.slot : "",
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setValues((v) => ({ ...v, [name]: value }));
+    const next = { ...current, [name]: value };
+    if (name === "date") next.slot = ""; // times belong to a date
+
+    setValues(next);
+
+    // Once a field has been visited, re-check as the person types,
+    // so the error disappears the moment it's fixed
+    setErrors((errs) => {
+      const updated = { ...errs };
+      if (touched[name]) updated[name] = validateField(name, value, next);
+      if (name === "date") updated.slot = "";
+      return updated;
+    });
   };
 
-  // Only runs when native validation (required, type=email) passes
+  // Validate when leaving a field, not while the person is still typing in it
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    setTouched((t) => ({ ...t, [name]: true }));
+    setErrors((errs) => ({
+      ...errs,
+      [name]: validateField(name, value, { ...current, [name]: value }),
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit?.(values);
+    if (submitting) return;
+
+    const found = validateAll(current);
+    setErrors(found);
+    setTouched(Object.fromEntries(Object.keys(values).map((k) => [k, true])));
+
+    if (Object.keys(found).length > 0) {
+      setSubmitAttempts((n) => n + 1);
+      onInvalid?.(Object.keys(found).length);
+      return;
+    }
+    onSubmit?.(current);
   };
+
+  // After a failed submit, move focus to the summary. It is already rendered,
+  // because errors and submitAttempts update in the same event.
+  useEffect(() => {
+    if (submitAttempts > 0) summaryRef.current?.focus();
+  }, [submitAttempts]);
+
+  // Summary items follow on-screen field order
+  const summaryItems = validatedFields
+    .filter((name) => errors[name])
+    .map((name) => ({ id: fieldId(name), message: errors[name] }));
+
+  const showSummary = submitAttempts > 0 && summaryItems.length > 0;
+
+  // Props shared by every controlled field
+  const bind = (name) => ({
+    id: fieldId(name),
+    name,
+    value: current[name],
+    error: errors[name],
+    onChange: handleChange,
+    onBlur: handleBlur,
+  });
 
   return (
     <form
       className={styles["form"]}
       onSubmit={handleSubmit}
       aria-labelledby={labelledBy}
+      aria-busy={submitting}
+      noValidate
     >
+      {showSummary && <ErrorSummary ref={summaryRef} errors={summaryItems} />}
+
+      <SlotPicker
+        slots={slots}
+        status={slotsStatus}
+        selectedDate={current.date}
+        dateProps={bind("date")}
+        slotProps={bind("slot")}
+        onRetry={onRetrySlots}
+      />
+
       <FormSection legend="Your details">
         <FormField
           label="First name"
-          name="firstName"
           autoComplete="given-name"
           required
-          value={values.firstName}
-          onChange={handleChange}
+          {...bind("firstName")}
         />
 
         <FormField
           label="Last name"
-          name="lastName"
           autoComplete="family-name"
           required
-          value={values.lastName}
-          onChange={handleChange}
+          {...bind("lastName")}
         />
 
         <FormField
           label="Cellphone number"
-          name="contactNumber"
           type="tel"
           autoComplete="tel"
           inputMode="tel"
           hint="We will send your reminder here. For example: 082 123 4567."
           required
-          value={values.contactNumber}
-          onChange={handleChange}
+          {...bind("contactNumber")}
         />
 
         <FormField
           label="Email address"
-          name="email"
           type="email"
           autoComplete="email"
           hint="We will send your booking confirmation here."
           required
-          value={values.email}
-          onChange={handleChange}
+          {...bind("email")}
         />
       </FormSection>
 
@@ -77,10 +165,8 @@ function BookingForm({ labelledBy, onSubmit }) {
         <FormField
           as="select"
           label="Type of appointment"
-          name="appointment"
           required
-          value={values.appointment}
-          onChange={handleChange}
+          {...bind("appointment")}
         >
           <option value="">Select an appointment type</option>
           {appointmentTypes.map(({ value, label }) => (
@@ -92,26 +178,22 @@ function BookingForm({ labelledBy, onSubmit }) {
 
         <RadioGroup
           legend="Have you visited this practice before?"
-          name="visited"
           options={visitedOptions}
-          value={values.visited}
-          onChange={handleChange}
           required
+          {...bind("visited")}
         />
 
         <FormField
           as="textarea"
           label="Do you need any support or adjustments? (optional)"
-          name="supportNeeds"
           rows={4}
           hint="For example: step-free access, a sign language interpreter or large-print letters."
-          value={values.supportNeeds}
-          onChange={handleChange}
+          {...bind("supportNeeds")}
         />
       </FormSection>
 
-      <button className="btn-primary" type="submit">
-        Review your booking
+      <button className="btn-primary" type="submit" aria-disabled={submitting}>
+        {submitting ? "Sending your booking…" : "Confirm booking"}
       </button>
     </form>
   );

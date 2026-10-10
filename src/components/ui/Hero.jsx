@@ -3,12 +3,16 @@ import styles from "./Hero.module.css";
 import { useNavigate } from "react-router";
 
 function Hero() {
+  const navigate = useNavigate();
   return (
     <section
       className={`${styles["hero"]} ${"bg-fade"}`}
       aria-labelledby="hero-title"
     >
-      <img src="../src/assets/images/heroImg.png" alt="family hug" />
+      <img
+        src="../src/assets/images/heroImg.png"
+        alt="Mother and Daughter embracing eachother"
+      />
       <h1 id="hero-title">
         See a healthcare provider when you need one. Hassle Free
       </h1>
