@@ -1,0 +1,133 @@
+/* ============================================================
+   404 Page
+   ============================================================ */
+
+/* Small devices (tiny screens and up, 176px and up) */
+@media (min-width: 176px) {
+  .page-not-found {
+    background-image: url("../assets/images/embraceOld.jpg");
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    height: auto;
+    width: 100%;
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .btn-div {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+  }
+
+  .btn-div button {
+    padding: 15px;
+  }
+
+  .text-404 {
+    width: 300px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #0000006a;
+    border-radius: var(--radius-lg);
+    -webkit-user-select: none; /* Safari */
+    user-select: none; /* Standard syntax */
+    margin-top: 50px;
+  }
+
+  .text-404 p:nth-of-type(1) {
+    color: var(--text-white);
+    font-size: 2.25rem;
+    font-family: var(--font-display);
+    text-align: center;
+    border-bottom: 3px solid var(--color-accent-light);
+  }
+
+  .text-404 p {
+    color: var(--color-gray-100);
+    font-size: 2.25rem;
+    font-family: var(--font-body);
+    text-align: center;
+  }
+
+  .text-404-accent {
+    color: var(--color-accent-light);
+    font-size: 2.5rem;
+    font-family: var(--font-body);
+  }
+
+  .text-404-end {
+    color: var(--color-white);
+
+    margin-top: 10px;
+    font-size: 1.5rem;
+    font-family: var(--font-heading);
+    text-align: center;
+    width: 65%;
+    justify-self: center;
+    align-self: center;
+    padding-bottom: 20px;
+    border-bottom: 3px solid var(--color-accent-light);
+    margin-bottom: 20px;
+  }
+}
+
+/* Small devices (tiny screens and up, 176px and up) */
+@media (min-width: 768px) {
+  .page-not-found {
+    height: 100vh;
+    padding: 0;
+  }
+  .btn-div {
+    width: 350px;
+  }
+
+  .text-404 {
+    width: 450px;
+  }
+
+  .text-404 p:nth-of-type(1) {
+    font-size: 5.5rem;
+  }
+
+  .text-404 p {
+    font-size: 2.5rem;
+  }
+
+  .text-404-accent {
+    font-size: 2.5rem;
+  }
+}
+
+/* Small devices (tiny screens and up, 176px and up) */
+@media (min-width: 992px) {
+  .page-not-found {
+    position: relative;
+    display: block;
+  }
+  .btn-div {
+    width: 450px;
+    position: absolute;
+    top: 85%;
+    left: 35%;
+  }
+
+  .text-404 {
+    width: 450px;
+    position: absolute;
+    padding: 20px;
+    top: 5%;
+    right: 10%;
+    display: flex;
+    flex-direction: column;
+    background-color: #0000006a;
+    border-radius: var(--radius-lg);
+    -webkit-user-select: none; /* Safari */
+    user-select: none; /* Standard syntax */
+  }
+}

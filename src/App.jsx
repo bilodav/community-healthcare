@@ -3,6 +3,7 @@ import "./App.css";
 import Header from "./components/common/Header";
 import Landing from "./pages/Landing";
 import Footer from "./components/common/Footer";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <Route path="/recipes/:id" element={<RecipeDetailPage />} />
         <Route path="/meal-planner" element={<MealPlannerPage />} />
         <Route path="/favorites" element={<FavoritesPage />} /> */}
-        {/* <Route path="*" element={<NotFound />} /> */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>
