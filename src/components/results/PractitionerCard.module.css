@@ -1,0 +1,43 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  height: 100%;
+}
+
+.card h3 {
+  margin-bottom: 0;
+  font-size: 1.375rem;
+}
+
+.profession {
+  margin-bottom: var(--spacing-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-muted);
+}
+
+.details {
+  display: grid;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+}
+
+.details dt {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-muted);
+}
+
+.details dd {
+  color: var(--text-primary);
+}
+
+/* Status is written text, never colour alone */
+.status {
+  font-weight: var(--font-weight-semibold);
+}
+
+.action {
+  margin-top: auto;
+  align-self: flex-start;
+}

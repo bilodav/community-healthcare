@@ -9,8 +9,8 @@ function Landing() {
     <main id="main" tabindex="-1">
       <Hero />
       <Triage />
-      <Services />
       <HowItWorks />
+      <Services />
     </main>
   );
 }

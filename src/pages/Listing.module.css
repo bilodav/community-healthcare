@@ -1,0 +1,23 @@
+/* Clears the fixed header */
+.listing {
+  padding-top: 120px;
+  padding-bottom: var(--spacing-2xl);
+}
+
+.listing .inner {
+  width: min(100% - 2rem, var(--container-max));
+  margin-inline: auto;
+}
+
+.results-layout {
+  display: grid;
+  gap: var(--spacing-xl);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+@media (min-width: 60rem) {
+  .results-layout {
+    grid-template-columns: 2.5fr 1fr;
+  }
+}

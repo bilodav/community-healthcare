@@ -17,7 +17,7 @@ function Hero() {
         Find the right service, check when a practitioner is free, and book in a
         few steps.
       </p>
-      <Button text="See a Doctor" onClick={() => navigate("/listings")} />
+      <Button text="See a Doctor" onClick={() => navigate("/listing")} />
     </section>
   );
 }

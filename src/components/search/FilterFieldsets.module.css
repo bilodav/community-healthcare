@@ -1,0 +1,11 @@
+.fieldset {
+  border: 0;
+  min-inline-size: 0;
+}
+
+.legend {
+  padding: 0;
+  margin-bottom: var(--spacing-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}

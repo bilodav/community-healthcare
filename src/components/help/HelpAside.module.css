@@ -1,0 +1,27 @@
+.notice {
+  padding: var(--spacing-lg);
+  background-color: var(--color-peach);
+  border-radius: var(--radius-xl);
+}
+
+.notice h2 {
+  font-size: 1.5rem;
+}
+
+.notice h2,
+.notice p,
+.notice li {
+  color: var(--color-ink);
+}
+
+.notice a {
+  color: var(--color-ink);
+  font-weight: var(--font-weight-semibold);
+}
+
+@media (min-width: 60rem) {
+  .notice {
+    position: sticky;
+    top: 120px;
+  }
+}

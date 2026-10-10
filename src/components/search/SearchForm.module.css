@@ -1,0 +1,18 @@
+.search-form {
+  margin-block: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background-color: var(--color-mint);
+  border-radius: var(--radius-xl);
+}
+
+.search-row {
+  display: grid;
+  gap: var(--spacing-md);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}

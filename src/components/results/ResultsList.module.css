@@ -1,0 +1,12 @@
+.results-count {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.results-list {
+  display: grid;
+  gap: var(--spacing-md);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  list-style: none;
+  padding: 0;
+}
