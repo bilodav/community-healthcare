@@ -22,9 +22,13 @@ function Footer() {
         <section aria-labelledby="footer-contact">
           <h2 id="footer-contact">Contact</h2>
           <p>
-            Community Clinic
+            Municipal Community Clinic
             <br />
-            12 Example Street, Placeholder Town
+            12 Fistula Street, Willowvale
+            <br />
+            Gauteng
+            <br />
+            South Africa
           </p>
           <p>Open Monday to Friday, 08:00 to 18:00</p>
         </section>
