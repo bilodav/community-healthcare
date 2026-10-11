@@ -11,10 +11,14 @@
   border: 2px solid var(--border-input);
   border-radius: var(--radius-full);
   cursor: pointer;
+  transition: var(--transition-base);
 }
 
 .toggle:hover {
-  background-color: var(--color-mint);
+  background-color: var(--color-accent-light);
+  box-shadow: var(--shadow-lg);
+  color: var(--text-white);
+  border-color: var(--color-ink);
 }
 
 /* Styled from the attribute, so what you see can never drift from what a

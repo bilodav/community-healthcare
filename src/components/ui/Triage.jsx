@@ -56,8 +56,12 @@ function Triage({
 
         <ul className={styles["pill-list"]}>
           {options.map(({ id, label, filters }) => (
-            <li key={id} className="badge">
-              <Link to={listingUrl(listingPath, filters)}>{label}</Link>
+            <li key={id}>
+              {/* The pill styling lives on the link, so the whole pill is the
+                  click target and the focus ring wraps all of it */}
+              <Link className="badge" to={listingUrl(listingPath, filters)}>
+                {label}
+              </Link>
             </li>
           ))}
         </ul>

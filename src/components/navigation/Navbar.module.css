@@ -39,6 +39,15 @@
   }
 }
 
+/* The open mobile menu is dark (#2b2b2b). The default ring #35647c would be only
+   2.20:1 there (FAIL 1.4.11), so use the peach ring: #f5d4c6 on #2b2b2b = 10.19:1.
+   Scoped below 768px, because the desktop nav sits on light glass. */
+@media (max-width: 767.98px) {
+  .nav a:focus-visible {
+    outline-color: var(--focus-ring-on-dark);
+  }
+}
+
 @media (min-width: 768px) {
   .nav,
   .nav.open {

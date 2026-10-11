@@ -6,7 +6,11 @@
     display: flex;
     align-items: center;
     position: fixed;
-    background-color: #7b7b7b8f;
+    /* Was rgba(123,123,123,0.56) with white text = 2.05:1 on a white page (FAIL 1.4.3).
+       White glass + ink text. Worst case is the dark footer scrolling under it:
+       glass over #112231 composites to #dbdee0, #112231 on #dbdee0 = 11.98:1.
+       Over #ffffff: 16.19:1. */
+    background-color: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
     top: 10px;
     right: 50%;
@@ -17,25 +21,28 @@
 
   .site-name {
     width: 150px;
-    color: var(--text-white);
+    color: var(--text-primary); /* #112231 on the glass >= 11.98:1 */
     text-decoration: none;
     display: flex;
     gap: 5px;
-    transition: var(--trasition-fast);
+    transition: var(--transition-fast);
   }
 
+  /* Hover: #1f3347 is >= 4.64:1 on every glass state (worst case: scrolled glass
+     over the dark footer, #b8bdc1). The underline means hover is not colour alone. */
   .site-name:hover {
-    color: var(--text-accent);
+    color: var(--color-ink-light);
+    text-decoration: underline;
   }
 
   .site-name svg {
     height: 20px;
-    fill: var(--text-white);
-    transition: var(--trasition-fast);
+    fill: var(--text-primary);
+    transition: var(--transition-fast);
   }
 
   .site-name:hover svg {
-    fill: var(--text-accent);
+    fill: var(--color-ink-light);
   }
 
   .burger {
@@ -55,7 +62,9 @@
   .burger span {
     display: block;
     height: 2px;
-    background: var(--text-white);
+    background: var(
+      --text-primary
+    ); /* bars sit on light glass: 16.19:1 over white */
     border-radius: 2px;
     transition:
       transform 0.3s,
@@ -87,8 +96,11 @@
     border-radius: 0;
     z-index: 1000;
   }
+  /* Scrolled glass (70% white): #112231 text over white 16.19:1, mint 15.66:1,
+     worst case over the dark footer (#b8bdc1) 8.55:1. Focus ring #35647c in that
+     worst case is 3.40:1. At 55% it was 2.31:1 (FAIL 1.4.11). */
   .scrolled {
-    background-color: rgba(255, 255, 255, 0.55);
+    background-color: rgba(255, 255, 255, 0.7);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     backdrop-filter: blur(16px) saturate(180%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.6);

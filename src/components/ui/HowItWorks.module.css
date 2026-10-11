@@ -31,7 +31,9 @@
   display: block;
   font-size: 4.5rem;
   font-weight: 100;
-  color: var(--text-accent-large);
+  /* Was --text-accent-large #479ba6 on mint = 2.87:1 (FAIL, even for large text).
+     #2a7480 on #e9f4f2 = 4.78:1 (AA). */
+  color: var(--text-accent);
 }
 
 .info-block h3 {
