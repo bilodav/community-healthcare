@@ -6,8 +6,10 @@ import Footer from "./components/common/Footer";
 import NotFound from "./pages/NotFound";
 import Listing from "./pages/Listing";
 import Booking from "./pages/Booking";
+import { useRouteFocus } from "./hooks/useRouteFocus";
 
 function App() {
+  useRouteFocus();
   return (
     <>
       <a className="skip-link" href="#main">

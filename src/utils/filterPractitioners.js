@@ -8,7 +8,7 @@ export function filterPractitioners(list, filters) {
   return list.filter((p) => {
     if (term && !`${p.name} ${p.role}`.toLowerCase().includes(term))
       return false;
-    if (profession && p.profession !== profession) return false;
+    if (profession.length && !profession.includes(p.profession)) return false;
     if (availabilityRank[p.availability] > (maxRank[availability] ?? Infinity))
       return false;
     if (consult.length && !consult.some((c) => p.consultations.includes(c)))

@@ -1,27 +1,53 @@
 import Navbar from "../navigation/Navbar";
 import styles from "./Header.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 
 function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef(null);
+  const burgerRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     onScroll(); // sets the correct state when page loads **Fixes mid-pagerefresh error
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // While the menu is open: Escape closes it and returns focus to the button
+  // that opened it; moving focus or clicking outside the header also closes
+  // it. No focus trap: this is a disclosure menu, not a modal, so the page
+  // behind it stays reachable.
   useEffect(() => {
     if (!menuOpen) return;
-    const onKey = (e) => e.key === "Escape" && setMenuOpen(false);
+
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        setMenuOpen(false);
+        burgerRef.current?.focus();
+      }
+    };
+    const onOutside = (e) => {
+      if (!headerRef.current?.contains(e.target)) setMenuOpen(false);
+    };
+
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    document.addEventListener("focusin", onOutside);
+    document.addEventListener("pointerdown", onOutside);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("focusin", onOutside);
+      document.removeEventListener("pointerdown", onOutside);
+    };
   }, [menuOpen]);
+
   return (
-    <header className={scrolled ? styles["scrolled"] : undefined}>
+    <header
+      ref={headerRef}
+      className={scrolled ? styles["scrolled"] : undefined}
+    >
       <Link
         className={styles["site-name"]}
         to="/"
@@ -40,6 +66,7 @@ function Header() {
       </Link>
 
       <button
+        ref={burgerRef}
         type="button"
         className={styles["burger"]}
         aria-label={menuOpen ? "Close menu" : "Open menu"}

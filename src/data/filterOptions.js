@@ -1,7 +1,13 @@
 export const professionOptions = [
+  { value: "dentist", label: "Dentist" },
   { value: "dietician", label: "Dietician" },
-  { value: "doctor", label: "Doctor" },
+  { value: "doctor", label: "General practitioner" },
+  { value: "gynaecologist", label: "Gynaecologist" },
+  { value: "mens-health", label: "Men's health doctor" },
   { value: "nurse", label: "Nurse" },
+  { value: "ophthalmologist", label: "Ophthalmologist" },
+  { value: "optometrist", label: "Optometrist" },
+  { value: "paediatrician", label: "Paediatrician" },
   { value: "pharmacist", label: "Pharmacist" },
   { value: "physiotherapist", label: "Physiotherapist" },
   { value: "psychologist", label: "Psychologist" },
@@ -31,7 +37,7 @@ export const languageOptions = [
 
 export const emptyFilters = {
   q: "",
-  profession: "",
+  profession: [],
   availability: "any",
   consult: [],
   language: [],

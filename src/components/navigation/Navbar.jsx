@@ -19,11 +19,11 @@ function Navbar({ id, isOpen, onNavigate }) {
             Find a service
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink to="/booking" onClick={onNavigate}>
             Book an appointment
           </NavLink>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );

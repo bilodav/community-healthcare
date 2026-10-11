@@ -6,42 +6,6 @@ Priority key: **P0** = broken or blocks marks, **P1** = required by the brief, *
 
 ---
 
-## C. Part B.2: Filterable listing with ARIA state
-
-- [ ] **C1 (P1) Add `aria-pressed` toggle buttons**
-  - Brief requires `aria-pressed` explicitly. Suggested: category pills on the listing page (filter by profession) and/or a "Virtual only" toggle.
-  - Must update in real time and visually reflect state without relying on colour alone.
-- [ ] **C2 (P1) Search runs while typing or on a clear trigger**
-  - Decide whether the form stays submit-based or filters live. If live, keep the results count announcement polite and debounced (avoid spamming screen readers).
-- [ ] **C3 (P2) Filter panel keeps its open state after search**
-  - `key={searchParams.toString()}` on `SearchForm` remounts it, so the panel resets to open. Consider lifting that state or dropping the key.
-- [ ] **C4 (P2) Loading state with `aria-busy`**
-  - Brief (Part C) asks how `aria-busy` is used. Add it to the results list during a simulated search delay.
-- [ ] **C5 (P2) Services and Triage cards link to filtered results**
-  - Confirm that `/listing?urgency=...` and the services links actually change what the listing shows (the filter logic doesn't read `urgency` or `service` yet).
-
----
-
-## D. Part B.3: Keyboard navigation and focus management
-
-- [ ] **D1 (P1) Focus on route change**
-  - On navigation, move focus to `<main>` (or the page `h1`) with `useRef` + `useEffect` keyed on `useLocation()`, so keyboard and screen reader users aren't left on the old link.
-  - Also announce the new page title.
-- [ ] **D2 (P1) Burger menu focus behaviour**
-  - File: `src/components/common/Header.jsx`
-  - Escape closes the menu: also return focus to the burger button.
-  - Decide and document the focus approach (trap vs. no trap). This is a good trade-off for the README.
-- [ ] **D3 (P1) Focus after search**
-  - After submitting a search, move focus to the results heading or count so the result is discoverable.
-- [ ] **D4 (P1) Optional modal for booking confirmation**
-  - If a dialog is used, it needs: focus moves in on open, Escape closes, focus returns to the trigger, background inert. Prefer native `<dialog>` with `showModal()`.
-- [ ] **D5 (P1) Full keyboard walkthrough**
-  - Tab through every page, check order, check no traps, confirm Space and Enter activate every control. Record in the test log (see F3).
-- [ ] **D6 (P2) Scroll listener**
-  - `Header.jsx` scroll listener: add `{ passive: true }`.
-
----
-
 ## E. Part A: Wireframes and planning checks
 
 - [ ] **E1 (P1) Contrast values in `wireframes/main.css` comments**

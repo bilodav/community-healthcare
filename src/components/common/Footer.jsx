@@ -35,9 +35,9 @@ function Footer() {
             <li>
               <Link to="/listing">Find a service</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/booking">Book an appointment</Link>
-            </li>
+            </li> */}
             <li>
               <a href="#accessibility-statement">Accessibility statement</a>
             </li>

@@ -2,6 +2,7 @@ import styles from "./Services.module.css";
 import { Link } from "react-router";
 import { useId } from "react";
 import docConsulting from "../../assets/images/docConsulting.jpg";
+import { listingUrl } from "../../utils/filterParams";
 
 const defaultServices = [
   {
@@ -9,40 +10,44 @@ const defaultServices = [
     title: "General practice",
     description:
       "Routine appointments, health reviews and referrals with a GP.",
-    cta: "Book general practice",
+    cta: "Find a general practitioner",
+    filters: { profession: ["doctor"] },
   },
   {
-    id: "child", // placeholder: your HTML had General practice twice
+    id: "child",
     title: "Child health",
     description: "Check-ups, vaccinations and advice for children.",
-    cta: "Book child health",
+    cta: "Find child health care",
+    filters: { q: "child" },
   },
   {
     id: "diabetes",
     title: "Diabetes care",
     description: "Annual reviews, foot checks and diabetic eye screening.",
-    cta: "Book diabetes care",
+    cta: "Find diabetes care",
     image: docConsulting,
+    filters: { q: "diabetes" },
   },
   {
     id: "eye",
     title: "Eye health",
     description: "Vision tests and retinal screening with our eye clinic team.",
-    cta: "Book eye health",
+    cta: "Find eye health care",
+    filters: { profession: ["ophthalmologist", "optometrist"] },
   },
   {
     id: "mental",
     title: "Mental health",
     description: "Confidential support and counselling appointments.",
-    cta: "Book mental health",
+    cta: "Find mental health support",
+    filters: { profession: ["psychologist"] },
   },
 ];
 
 function Services({
   title = "Popular clinic services",
   services = defaultServices,
-  bookingPath = "/booking",
-  viewAllPath = "/listing",
+  listingPath = "/listing",
   viewAllLabel = "View all clinic services",
 }) {
   const baseId = useId();
@@ -56,7 +61,7 @@ function Services({
         </h2>
 
         <div className={styles["card-container"]}>
-          {services.map(({ id, title, description, cta, image }) => {
+          {services.map(({ id, title, description, cta, image, filters }) => {
             const headingId = `${baseId}-${id}`;
             return (
               <article
@@ -69,7 +74,7 @@ function Services({
                 <p>{description}</p>
                 <Link
                   className="btn btn--outline"
-                  to={`${bookingPath}?service=${id}`}
+                  to={listingUrl(listingPath, filters)}
                 >
                   {cta}
                 </Link>
@@ -78,7 +83,7 @@ function Services({
           })}
         </div>
 
-        <Link className={styles["extra-info"]} to={viewAllPath}>
+        <Link className={styles["extra-info"]} to={listingPath}>
           {viewAllLabel}
         </Link>
       </div>

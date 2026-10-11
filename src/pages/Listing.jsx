@@ -1,35 +1,49 @@
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
 import styles from "./Listing.module.css";
 import SearchForm from "../components/search/SearchForm";
 import ResultsList from "../components/results/ResultsList";
 import HelpAside from "../components/help/HelpAside";
 import { practitioners } from "../data/practitioners";
+import { emptyFilters } from "../data/filterOptions";
 import { filterPractitioners } from "../utils/filterPractitioners";
-
-function paramsToFilters(params) {
-  return {
-    q: params.get("q") ?? "",
-    profession: params.get("profession") ?? "",
-    availability: params.get("availability") ?? "any",
-    consult: params.getAll("consult"),
-    language: params.getAll("language"),
-  };
-}
-
-function filtersToParams(f) {
-  const params = new URLSearchParams();
-  if (f.q.trim()) params.set("q", f.q.trim());
-  if (f.profession) params.set("profession", f.profession);
-  if (f.availability !== "any") params.set("availability", f.availability);
-  f.consult.forEach((v) => params.append("consult", v));
-  f.language.forEach((v) => params.append("language", v));
-  return params;
-}
+import { withAvailability } from "../utils/availability";
+import { paramsToFilters, filtersToParams } from "../utils/filterParams";
+import { useDebouncedValue } from "../hooks/useDebouncedValue";
 
 function Listing() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const filters = paramsToFilters(searchParams);
-  const results = filterPractitioners(practitioners, filters);
+  const [filters, setFilters] = useState(() => paramsToFilters(searchParams));
+  const resultsHeadingRef = useRef(null);
+
+  // Availability is derived from the live slot data, then filtered
+  const results = filterPractitioners(
+    practitioners.map(withAvailability),
+    filters,
+  );
+
+  const update = (name, value) => setFilters((f) => ({ ...f, [name]: value }));
+
+  const toggle = (name, value) =>
+    setFilters((f) => ({
+      ...f,
+      [name]: f[name].includes(value)
+        ? f[name].filter((x) => x !== value)
+        : [...f[name], value],
+    }));
+
+  const clear = () => setFilters(emptyFilters);
+
+  // Keep the URL in step once the filters settle. State is the source of
+  // truth; `replace` stops every keystroke becoming a history entry.
+  const settled = useDebouncedValue(filters, 400);
+  useEffect(() => {
+    const next = filtersToParams(settled);
+    const current = filtersToParams(paramsToFilters(searchParams));
+    if (next.toString() !== current.toString()) {
+      setSearchParams(next, { replace: true });
+    }
+  }, [settled, searchParams, setSearchParams]);
 
   return (
     <main id="main" tabIndex={-1} className={styles["listing"]}>
@@ -47,14 +61,15 @@ function Listing() {
         </p>
 
         <SearchForm
-          key={searchParams.toString()}
-          initialValues={filters}
-          onSearch={(f) => setSearchParams(filtersToParams(f))}
-          onClear={() => setSearchParams({})}
+          values={filters}
+          onChange={update}
+          onToggle={toggle}
+          onClear={clear}
+          onSubmit={() => resultsHeadingRef.current?.focus()}
         />
 
         <div className={styles["results-layout"]}>
-          <ResultsList practitioners={results} />
+          <ResultsList practitioners={results} headingRef={resultsHeadingRef} />
           <HelpAside />
         </div>
       </div>

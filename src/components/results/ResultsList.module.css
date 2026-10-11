@@ -10,3 +10,7 @@
   list-style: none;
   padding: 0;
 }
+
+.heading {
+  scroll-margin-top: 140px; /* clears the fixed header on focus change bug */
+}

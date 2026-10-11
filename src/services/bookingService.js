@@ -77,3 +77,9 @@ export async function bookSlot(start, booking) {
   booked.add(id);
   return { id };
 }
+
+// The next open slot for a practitioner, or null if none in the next two weeks.
+// Synchronous so the listing page can use it while rendering.
+export function getNextSlot(practitionerId) {
+  return buildSlots(practitionerId)[0] ?? null;
+}

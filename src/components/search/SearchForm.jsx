@@ -1,35 +1,20 @@
-import { useId, useState } from "react";
+import { useId } from "react";
 import styles from "./SearchForm.module.css";
 import FilterPanel from "./FilterPanel";
-import { emptyFilters, professionOptions } from "../../data/filterOptions";
+import ToggleGroup from "./ToggleGroup";
+import { professionOptions } from "../../data/filterOptions";
 import Button from "../ui/Button";
 
-function SearchForm({ initialValues, onSearch, onClear }) {
-  const [values, setValues] = useState(initialValues);
+// Controlled: the parent owns the filter values and updates them live
+function SearchForm({ values, onChange, onToggle, onClear, onSubmit }) {
   const id = useId();
   const titleId = `${id}-title`;
   const searchId = `${id}-search`;
   const hintId = `${id}-search-hint`;
-  const professionId = `${id}-profession`;
-
-  const update = (name, value) => setValues((v) => ({ ...v, [name]: value }));
-
-  const toggle = (name, value) =>
-    setValues((v) => ({
-      ...v,
-      [name]: v[name].includes(value)
-        ? v[name].filter((x) => x !== value)
-        : [...v[name], value],
-    }));
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(values);
-  };
-
-  const handleClear = () => {
-    setValues(emptyFilters);
-    onClear();
+    onSubmit?.();
   };
 
   return (
@@ -53,40 +38,28 @@ function SearchForm({ initialValues, onSearch, onClear }) {
             autoComplete="off"
             aria-describedby={hintId}
             value={values.q}
-            onChange={(e) => update("q", e.target.value)}
+            onChange={(e) => onChange("q", e.target.value)}
           />
           <span id={hintId} className="field-hint">
-            For example: "Mokoena" or "diabetes".
+            For example: "Mokoena" or "diabetes". Results update automatically
+            as you type or change a filter.
           </span>
-        </div>
-
-        <div className="field">
-          <label htmlFor={professionId}>Profession</label>
-          <select
-            id={professionId}
-            name="profession"
-            value={values.profession}
-            onChange={(e) => update("profession", e.target.value)}
-          >
-            <option value="">All professions</option>
-            {professionOptions.map(({ value, label }) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
         </div>
       </div>
 
-      <FilterPanel values={values} onChange={update} onToggle={toggle} />
+      <ToggleGroup
+        legend="Profession"
+        hint="Select any to narrow the results. Leave all unselected to see every profession."
+        options={professionOptions}
+        values={values.profession}
+        onToggle={(v) => onToggle("profession", v)}
+      />
+
+      <FilterPanel values={values} onChange={onChange} onToggle={onToggle} />
 
       <div className={styles["form-actions"]}>
-        <Button text="Search Practitioners" type="submit" />
-        <Button
-          text="Clear all filters"
-          type="button"
-          onClick={() => handleClear()}
-        />
+        <Button text="Show results" type="submit" />
+        <Button text="Clear all filters" type="button" onClick={onClear} />
       </div>
     </form>
   );

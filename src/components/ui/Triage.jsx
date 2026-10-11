@@ -1,20 +1,44 @@
 import styles from "./Triage.module.css";
 import { Link } from "react-router";
 import { useId } from "react";
+import { listingUrl } from "../../utils/filterParams";
 
+// Each option carries the listing filters it should open with.
+// Placeholder logic for the prototype: a real clinic's staff should confirm
+// which practitioners suit which situation.
 const defaultOptions = [
-  { label: "Routine check-up", urgency: "routine" },
-  { label: "Follow-up appointment", urgency: "follow-up" },
-  { label: "New symptoms", urgency: "new-symptoms" },
-  { label: "Repeat prescription", urgency: "prescription" },
-  { label: "Test results", urgency: "test-results" },
+  {
+    id: "routine",
+    label: "Routine check-up",
+    filters: { profession: ["doctor", "nurse"] },
+  },
+  {
+    id: "follow-up",
+    label: "Follow-up appointment",
+    filters: { profession: ["doctor", "nurse"], availability: "fortnight" },
+  },
+  {
+    id: "new-symptoms",
+    label: "New symptoms",
+    filters: { profession: ["doctor", "nurse"], availability: "week" },
+  },
+  {
+    id: "prescription",
+    label: "Repeat prescription",
+    filters: { profession: ["pharmacist", "doctor"] },
+  },
+  {
+    id: "test-results",
+    label: "Test results",
+    filters: { profession: ["doctor", "nurse"], consult: ["virtual"] },
+  },
 ];
 
 function Triage({
   title = "Not sure where to start?",
   description = "Choose what best describes your situation. We will show you the right services.",
   options = defaultOptions,
-  basePath = "/listing",
+  listingPath = "/listing",
   emergencyNote = "If this is an emergency, call 10111 straight away.",
 }) {
   const titleId = useId();
@@ -31,9 +55,9 @@ function Triage({
         <p className={styles["description"]}>{description}</p>
 
         <ul className={styles["pill-list"]}>
-          {options.map(({ label, urgency }) => (
-            <li key={urgency} className="badge">
-              <Link to={`${basePath}?urgency=${urgency}`}>{label}</Link>
+          {options.map(({ id, label, filters }) => (
+            <li key={id} className="badge">
+              <Link to={listingUrl(listingPath, filters)}>{label}</Link>
             </li>
           ))}
         </ul>
