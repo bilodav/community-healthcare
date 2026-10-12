@@ -1,6 +1,7 @@
 import Button from "./Button";
 import styles from "./Hero.module.css";
 import { useNavigate } from "react-router";
+import heroImg from "../../assets/images/heroImg.png";
 
 function Hero() {
   const navigate = useNavigate();
@@ -9,10 +10,7 @@ function Hero() {
       className={`${styles["hero"]} ${"bg-fade"}`}
       aria-labelledby="hero-title"
     >
-      <img
-        src="../src/assets/images/heroImg.png"
-        alt="Mother and Daughter embracing eachother"
-      />
+      <img src={heroImg} alt="Mother and Daughter embracing eachother" />
       <h1 id="hero-title">
         See a healthcare provider when you need one. Hassle Free
       </h1>
