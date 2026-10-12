@@ -55,7 +55,7 @@ function Services({
 
   return (
     <section className="section" aria-labelledby={titleId}>
-      <div className="container">
+      <div className={styles["services-container"]}>
         <h2 id={titleId} className={styles["title"]}>
           {title}
         </h2>
@@ -73,7 +73,7 @@ function Services({
                 <h3 id={headingId}>{title}</h3>
                 <p>{description}</p>
                 <Link
-                  className="btn btn--outline"
+                  className={styles["link"]}
                   to={listingUrl(listingPath, filters)}
                 >
                   {cta}

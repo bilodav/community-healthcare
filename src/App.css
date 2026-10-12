@@ -264,7 +264,6 @@ table {
   --color-success-dark: #145037; /* on #e3f3ec = 8.20:1 */
 
   --color-warning: #8a5300; /* #8a5300 on #ffffff = 6.33:1, on #fdf1dc = 5.66:1 (AA) */
-  --color-warning-light: #fdf1dc;
 
   --text-error: #b3261e;
   --text-success: #1d6b4a;
@@ -1080,25 +1079,6 @@ label {
 .btn-success:active {
   background-color: var(--btn-success-active);
   transform: translateY(0);
-}
-
-/* ── Icon button: always add aria-label in your HTML ── */
-.btn-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--target-min);
-  height: var(--target-min);
-  background-color: transparent;
-  color: var(--btn-ghost-text);
-  border: none;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: background-color var(--transition-base);
-}
-
-.btn-icon:hover {
-  background-color: var(--btn-ghost-hover-bg);
 }
 
 /* ── Buttons on dark surfaces ── */

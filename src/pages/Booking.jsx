@@ -114,8 +114,10 @@ function BookingFlow({ practitioner }) {
           <>
             <p className="lead">
               Booking with <strong>{practitioner.name}</strong> (
-              {practitioner.role}).{" "}
-              <Link to="/listing">Choose a different practitioner</Link>
+              {practitioner.role}). <br />
+              <Link className={styles["doc-link"]} to="/listing">
+                Choose a different practitioner
+              </Link>
             </p>
 
             <p>

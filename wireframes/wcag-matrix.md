@@ -93,11 +93,11 @@ Run on the production build (`npm run build && npm run preview`) on 2026-10-11. 
 
 | Page                        | Lighthouse Accessibility | Audits passed / failed | Report                                             | Component axe test (F2) |
 | --------------------------- | ------------------------ | ---------------------- | -------------------------------------------------- | ----------------------- |
-| Landing `/`                 | **100** / 100            | 22 / 0                 | `docs/lighthouse/landing.report.html`              | ☐ pass                  |
-| Listing `/listing`          | **100** / 100            | 28 / 0                 | `docs/lighthouse/listing.report.html`              | ☐ pass                  |
-| Booking form `/booking?...` | **100** / 100            | 28 / 0                 | `docs/lighthouse/booking.report.html`              | ☐ pass                  |
-| Booking confirmation        | **100** / 100            | 26 / 0                 | `docs/lighthouse/booking-confirmation.report.html` | ☐ pass                  |
-| 404 page                    | **100** / 100            | 21 / 0                 | `docs/lighthouse/not-found.report.html`            | ☐ pass                  |
+| Landing `/`                 | **100** / 100            | 22 / 0                 | `docs/lighthouse/landing.report.html`              | ☑ pass                  |
+| Listing `/listing`          | **100** / 100            | 28 / 0                 | `docs/lighthouse/listing.report.html`              | ☑ pass                  |
+| Booking form `/booking?...` | **100** / 100            | 28 / 0                 | `docs/lighthouse/booking.report.html`              | ☑ pass                  |
+| Booking confirmation        | **100** / 100            | 26 / 0                 | `docs/lighthouse/booking-confirmation.report.html` | ☑ pass                  |
+| 404 page                    | **100** / 100            | 21 / 0                 | `docs/lighthouse/not-found.report.html`            | ☑ pass                  |
 
 Because Lighthouse runs in a real browser, the `color-contrast` audit ran (and passed) on all five pages. This closes the gap noted in 5a, where jsdom could not check contrast. The "manual check" items Lighthouse lists (10 per page) are the things no tool can test; they are covered by the keyboard and screen reader work in 5c, 5e and 5f.
 

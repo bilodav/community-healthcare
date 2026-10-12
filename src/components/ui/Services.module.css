@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.services-container {
+  width: 90%;
+  margin: 0 auto;
+}
+
 .card-container {
   display: grid;
   grid-template-columns: 1fr; /* single column on small screens */
@@ -14,6 +19,37 @@
   display: inline-block;
   margin-top: var(--spacing-md);
   padding: 0 80px;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
+}
+
+.link {
+  background-color: var(--btn-outline-bg);
+  color: var(--btn-outline-text);
+  border: 2px solid var(--btn-outline-border);
+}
+
+.link:hover {
+  background-color: var(--btn-outline-hover-bg);
+  color: var(--btn-outline-hover-text);
 }
 
 /* Image card: set the background properties once, the image comes from JSX */

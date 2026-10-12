@@ -1223,7 +1223,7 @@ Hero Section
   color: var(--text-secondary);
 }
 
-.hero button {
+.hero a {
   grid-column: 1/2;
   grid-row: 4/5;
   height: 20px;

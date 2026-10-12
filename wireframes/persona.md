@@ -131,14 +131,3 @@ This table shows how Priya's needs shape the prototype. It is useful context for
 | Concise, well-timed announcements | Visual-only confirmation |
 | Plain language                    | Image-based CAPTCHA      |
 | Time to complete tasks            | Drag-and-drop interfaces |
-
----
-
-## 8. Testing Notes for This Persona
-
-Use this persona as the acceptance test for Part B and Part C:
-
-- **Screen reader pairing:** NVDA with Firefox is the primary test. VoiceOver with Safari is the secondary test.
-- **Keyboard only:** unplug the mouse and complete the full booking flow with `Tab`, `Shift+Tab`, `Enter`, `Space`, arrow keys and `Esc`.
-- **Screen off:** run the booking scenario in section 6 with the display turned off. If it cannot be completed, it fails.
-- **Announcement audit:** record what NVDA says after each state change. Check that nothing is announced twice, nothing important is silent, and nothing interrupts typing.
