@@ -44,7 +44,7 @@
     height: fit-content;
   }
 
-  .hero button {
+  .hero a {
     grid-row: 6 / 7;
     height: 20px;
     width: 200px;
@@ -71,7 +71,7 @@
 
   .hero h1,
   .hero p,
-  .hero button {
+  .hero a {
     justify-self: start; /* undo the centering from small screens */
     text-align: left;
   }
@@ -93,7 +93,7 @@
     backdrop-filter: none;
   }
 
-  .hero button {
+  .hero a {
     grid-column: 1 / 2;
     grid-row: 4 / 5;
     height: 20px;

@@ -1,10 +1,8 @@
-import Button from "./Button";
 import styles from "./Hero.module.css";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 import heroImg from "../../assets/images/heroImg.png";
 
 function Hero() {
-  const navigate = useNavigate();
   return (
     <section
       className={`${styles["hero"]} ${"bg-fade"}`}
@@ -19,7 +17,9 @@ function Hero() {
         Find the right service, check when a practitioner is free, and book in a
         few steps.
       </p>
-      <Button text="See a Doctor" onClick={() => navigate("/listing")} />
+      <Link className="btn-primary" to="/listing">
+        See a Doctor
+      </Link>
     </section>
   );
 }

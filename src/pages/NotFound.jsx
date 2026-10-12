@@ -6,12 +6,13 @@ function NotFound() {
   const navigate = useNavigate();
   return (
     <main id="main" tabIndex={-1} className={styles["page-not-found"]}>
+      <title>Page not found – Community Clinic</title>
       <div className={styles["text-404"]}>
         <p>404</p>
-        <p>
-          Not sure how how you got here,
+        <h1>
+          Not sure how you got here,
           <span className={styles["text-404-accent"]}> do not worry</span>
-        </p>
+        </h1>
 
         <span className={styles["text-404-end"]}>
           The path ends here but we can help you get back on track
