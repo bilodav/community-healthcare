@@ -17,7 +17,7 @@
 .toggle:hover {
   background-color: var(--color-accent-light);
   box-shadow: var(--shadow-lg);
-  color: var(--text-white);
+  color: var(--text-primary);
   border-color: var(--color-ink);
 }
 

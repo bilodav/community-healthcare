@@ -12,7 +12,22 @@ import { paramsToFilters, filtersToParams } from "../utils/filterParams";
 
 function Listing() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const urlKey = searchParams.toString();
   const [filters, setFilters] = useState(() => paramsToFilters(searchParams));
+
+  // The query string the controls currently agree with: either what we read
+  // from the URL or what we last wrote to it.
+  const [syncedKey, setSyncedKey] = useState(urlKey);
+
+  // URL -> controls. If the URL changed to something we did not write
+  // (Back/Forward, a link to /listing?profession=doctor while already on the
+  // page), rebuild the controls from it. Done during render, so there is no
+  // frame with stale controls.
+  if (urlKey !== syncedKey) {
+    setSyncedKey(urlKey);
+    setFilters(paramsToFilters(searchParams));
+  }
+
   const resultsHeadingRef = useRef(null);
 
   // Availability is derived from the live slot data, then filtered
