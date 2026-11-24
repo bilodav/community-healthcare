@@ -1,6 +1,6 @@
 import styles from "./Hero.module.css";
 import { Link } from "react-router";
-import heroImg from "../../assets/images/heroImg.png";
+import heroImg from "../../assets/images/heroImg.webp";
 
 function Hero() {
   return (
