@@ -9,7 +9,6 @@ import { emptyFilters } from "../data/filterOptions";
 import { filterPractitioners } from "../utils/filterPractitioners";
 import { withAvailability } from "../utils/availability";
 import { paramsToFilters, filtersToParams } from "../utils/filterParams";
-import { useDebouncedValue } from "../hooks/useDebouncedValue";
 
 function Listing() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,16 +33,22 @@ function Listing() {
 
   const clear = () => setFilters(emptyFilters);
 
-  // Keep the URL in step once the filters settle. State is the source of
-  // truth; `replace` stops every keystroke becoming a history entry.
-  const settled = useDebouncedValue(filters, 400);
+  // Mirror the controls into the URL once the visitor stops changing them, so
+  // a filtered view can be shared. `replace` stops every keystroke becoming a
+  // history entry. The timer is cancelled whenever the filters or the URL
+  // change, so a write that is still waiting can never overwrite a newer
+  // navigation with stale filters.
+
   useEffect(() => {
-    const next = filtersToParams(settled);
-    const current = filtersToParams(paramsToFilters(searchParams));
-    if (next.toString() !== current.toString()) {
-      setSearchParams(next, { replace: true });
-    }
-  }, [settled, searchParams, setSearchParams]);
+    const next = filtersToParams(filters).toString();
+    if (next === syncedKey) return;
+
+    const timer = setTimeout(() => {
+      setSyncedKey(next);
+      setSearchParams(new URLSearchParams(next), { replace: true });
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [filters, syncedKey, setSearchParams]);
 
   return (
     <main id="main" tabIndex={-1} className={styles["listing"]}>

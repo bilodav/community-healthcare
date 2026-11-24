@@ -1651,3 +1651,167 @@ legend {
     top: 120px;
   }
 }
+
+/*
+=====================================
+Responsive reflow (WCAG 1.4.10, 1.4.4)
+=====================================
+Breakpoints:
+  max-width 60rem (960px)  stack grids into fewer columns
+  max-width 40rem (640px)  single column, tighter header and footer
+*/
+
+@media (max-width: 60rem) {
+  /* Header: wraps instead of overflowing. The pill shape becomes a softer
+     rounded box because a fully round end looks wrong on two lines. */
+  .header {
+    width: calc(100% - 1rem);
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    padding: 12px 20px;
+    border-radius: var(--radius-xl);
+  }
+
+  .site-name {
+    width: auto;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .nav {
+    margin: 0 0 0 auto;
+  }
+
+  .nav ul {
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+  }
+
+  /* The fixed header is taller when it wraps, so anchored and focused
+     elements need more room above them. */
+  html {
+    scroll-padding-top: 9rem;
+  }
+
+  /* Hero: one column. The image stays first to match the DOM order, so
+     the visual order and the reading order are the same. */
+  .hero {
+    height: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    gap: 1rem;
+    padding: 8rem 1rem 3rem;
+  }
+
+  .hero img {
+    grid-column: 1;
+    grid-row: auto;
+    height: auto;
+    max-height: 22rem;
+    margin-left: 0;
+    justify-self: center;
+    object-fit: contain;
+  }
+
+  #hero-title {
+    grid-column: 1;
+    grid-row: auto;
+    padding-top: 0;
+    font-size: var(--text-h1);
+  }
+
+  .hero p {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .hero a {
+    grid-column: 1;
+    grid-row: auto;
+    height: auto;
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  /* Triage pills wrap onto new lines instead of running off the page. */
+  .pill-list {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .badge {
+    text-align: center;
+  }
+
+  /* Services: two columns, every card flows in source order. */
+  .services-card-container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+  }
+
+  .services-card-container .card:nth-of-type(n) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .services-card-container .card:nth-of-type(3) {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)),
+      url(../src/assets/images/docConsulting.jpg);
+  }
+
+  .extra-info {
+    padding: 0;
+  }
+
+  /* How booking works: stacked, so nothing spills out of the mint panel. */
+  .how-to {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    gap: 10px;
+    padding: 1.5rem;
+  }
+
+  .how-to h2,
+  .how-to p,
+  .info-block:nth-of-type(n) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .how-to p {
+    align-self: auto;
+  }
+
+  .info-block h3 {
+    font-size: 3rem;
+  }
+
+  .info-block h4 {
+    font-size: 1.5rem;
+  }
+
+  /* Footer: stacked blocks instead of a squeezed row. */
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 40rem) {
+  .header {
+    padding: 10px 16px;
+  }
+
+  .listing,
+  .booking {
+    padding-top: 8rem;
+  }
+
+  .services-card-container {
+    grid-template-columns: 1fr;
+  }
+}
